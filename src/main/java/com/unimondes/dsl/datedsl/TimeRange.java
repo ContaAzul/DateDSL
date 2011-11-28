@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class TimeRange {
+public final class TimeRange {
 
 	private Calendar startDate;
 	private Calendar endDate;
@@ -12,7 +12,15 @@ public class TimeRange {
 	public TimeRange() {
 		super();
 	}
-	
+
+    /**
+     *
+     * Create range with date and unit
+     *
+     * @param calendar date
+     * @param size unit range
+     *
+     */
 	public TimeRange(Calendar calendar, TimeUnit size) {
 		super();
 		this.startDate = Calendar.getInstance();
@@ -23,106 +31,131 @@ public class TimeRange {
 		this.endDate.add(size.getType(), size.getSize());
 	}
 
+    /**
+     *
+     * set start date of range
+     *
+     * @param startDate date
+     *
+     */
 	public TimeRange startWith(final Date startDate) {
 		this.startDate = Calendar.getInstance();
 		this.startDate.setTime(startDate);
 		return this;
 	}
-	
+
+    /**
+     *
+     * set start date of range
+     *
+     * @param startDate date
+     *
+     */
 	public TimeRange startWith(final Calendar startDate) {
 		this.startDate = Calendar.getInstance();
 		this.startDate.setTime(startDate.getTime());
 		return this;
 	}
-	
+
+    /**
+     *
+     * set start date of range
+     *
+     * @param startDate date
+     *
+     */
 	public TimeRange startWith(final DateBuilder startDate) {
 		this.startDate = Calendar.getInstance();
 		this.startDate.setTime(startDate.toDate());
 		return this;
 	}
-	
+
+    /**
+     *
+     * set end date of range
+     *
+     * @param endDate date
+     *
+     */
 	public TimeRange endWith(final Date endDate) {
 		this.endDate = Calendar.getInstance();
 		this.endDate.setTime(endDate);
 		return this;
 	}
-	
+
+    /**
+     *
+     * set end date of range
+     *
+     * @param endDate date
+     *
+     */
 	public TimeRange endWith(final Calendar endDate) {
 		this.endDate = Calendar.getInstance();
 		this.endDate.setTime(endDate.getTime());
 		return this;
 	}
-	
+
+    /**
+     *
+     * set end date of range
+     *
+     * @param endDate date
+     *
+     */
 	public TimeRange endWith(final DateBuilder endDate) {
 		this.endDate = Calendar.getInstance();
 		this.endDate.setTime(endDate.toDate());
 		return this;
 	}
-	
-	public boolean contains(final Calendar date) {
-		return !date.before(startDate) && !date.after(endDate);		
-	}
-	
-	public boolean contains(final Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		return contains(calendar);
-	}
-	
-	public boolean contains(DateBuilder date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date.toDate());
-		return contains(calendar);
-	}
 
 	/**
-	 * Elapsed days based on two Date objects
-	 *
-	 * @param d1 Date
-	 * @param d2 Date
+     *
+	 * Elapsed days
 	 *
 	 * @return int number of days
+     *
 	 */
 	public int getElapsedDays() {
 		return elapsed(Calendar.DATE);
 	}
 
 	/**
-	 * Elapsed months based on two Date objects
-	 *
-	 * @param d1 Date
-	 * @param d2 Date
+	 * Elapsed months
 	 *
 	 * @return int number of months
+     *
 	 */
 	public int getElapsedMonths() {
 		return elapsed(Calendar.MONTH);
 	}
 	
 	/**
-	 * Elapsed years based on current time
 	 *
-	 * @param date Date
+     * Elapsed years
+	 *
 	 * @return int number of years
+     *
 	 */
 	public int getElapsedYears() {
 		return elapsed(Calendar.YEAR);
 	}
-	    
 
-	 /**
+    /**
+     *
      * All elaspsed types
      *
-     * @param g1 GregorianCalendar
-     * @param g2 GregorianCalendar
      * @param type int (Calendar.FIELD_NAME)
      *
      * @return int number of elapsed "type"
+     *
      */
 	private int elapsed(int type) {
 		
         GregorianCalendar gc1, gc2;
+
         int elapsed = 0;
+
         // Create copies since we will be clearing/adding
         if (endDate.after(startDate)) {
             gc2 = (GregorianCalendar) endDate.clone();
@@ -145,10 +178,12 @@ public class TimeRange {
             gc1.set(Calendar.DAY_OF_MONTH, 1);
             gc2.set(Calendar.DAY_OF_MONTH, 1);
         }
+
         if (type == Calendar.YEAR) {
             gc1.clear(Calendar.MONTH);
             gc2.clear(Calendar.MONTH);
         }
+
         while (gc1.before(gc2)) {
             gc1.add(type, 1);
             elapsed++;
@@ -161,10 +196,5 @@ public class TimeRange {
         return elapsed;
         
     }
-	
-	public boolean isDistinctFrom(TimeRange range)  {
-		return (range.endDate.before(startDate) && range.startDate.before(startDate)) 
-			|| (range.endDate.after(endDate) && range.startDate.after(endDate));
-	}
-	
+
 }
