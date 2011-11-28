@@ -35,6 +35,7 @@ public final class DateBuilder {
 	 * Set milliseconds for the date.
 	 * 
 	 * @param millisecond
+     *
 	 * @return DateBuilder
 	 * 
 	 */
@@ -48,6 +49,7 @@ public final class DateBuilder {
 	 * Set secounds for the date.
 	 * 
 	 * @param second
+     *
 	 * @return DateBuilder
 	 * 
 	 */
@@ -61,6 +63,7 @@ public final class DateBuilder {
 	 * Set minutes for the date.
 	 * 
 	 * @param minute
+     *
 	 * @return DateBuilder
 	 * 
 	 */
@@ -74,6 +77,7 @@ public final class DateBuilder {
 	 * Set hours for the date.
 	 * 
 	 * @param hour
+     *
 	 * @return DateBuilder
 	 * 
 	 */
@@ -87,6 +91,7 @@ public final class DateBuilder {
 	 * Set day of week for the date.
 	 *  
 	 * @param day
+     *
 	 * @return DateBuilder
 	 * 
 	 */
@@ -100,6 +105,7 @@ public final class DateBuilder {
 	 * Set day of month for the date. (1..31)
 	 * 
 	 * @param day
+     *
 	 * @return DateBuilder
 	 * 
 	 */
@@ -112,6 +118,7 @@ public final class DateBuilder {
 	 * Set month for the date.
 	 * 
 	 * @param month
+     *
 	 * @return DateBuilder
 	 * 
 	 */
@@ -125,6 +132,7 @@ public final class DateBuilder {
 	 * Set year for the date.
 	 * 
 	 * @param year
+     *
 	 * @return DateBuilder
 	 * 
 	 */
@@ -192,7 +200,9 @@ public final class DateBuilder {
 	}
 	
 	/**
-	 * 
+	 *
+     * Get date instance
+     *
 	 * Return java.util.Date
 	 * 
 	 * @return {@link Date}
@@ -203,7 +213,9 @@ public final class DateBuilder {
 	}
 	
 	/**
-	 * 
+	 *
+     * Get calendar instance
+     *
 	 * Return java.util.Calendar
 	 * 
 	 * @return {@link Calendar}
@@ -215,38 +227,70 @@ public final class DateBuilder {
 
 	/**
 	 * 
-	 * 
+	 * Parse date to string
 	 * 
 	 * @param dateFormat {@link SimpleDateFormat}
-	 * @return
+     *
+	 * @return String date
 	 * 
 	 */
 	public String format(String dateFormat) {
 		return new SimpleDateFormat(dateFormat).format(this.date.getTime());
 	}
 
+    /**
+     *
+     * Check is date is in weekend
+     *
+     */
 	public boolean isWeekend() {
 		return ((date.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) || (date.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY));
 	}
-	
+
+    /**
+     *
+     * Check is date is in today
+     *
+     */
 	public boolean isToday() {
 		return new TimeRange().startWith(date).endWith(date()).getElapsedDays() == 0;
 	}
-	
+
+    /**
+     *
+     * Check is date is in past
+     *
+     */
 	public boolean isPastDate() {
 		return new TimeRange().startWith(date).endWith(date()).getElapsedDays() > 0;
 	}
-	
+
+    /**
+     *
+     * Check the date is in future
+     *
+     * @return
+     */
 	public boolean isFutureDate() {
 		return new TimeRange().startWith(date).endWith(date()).getElapsedDays() < 0;
 	}
-	
+
+    /**
+     *
+     * Check is date is in current month
+     *
+     */
 	public boolean isCurrentMonth() {
 		return new TimeRange().startWith(date).endWith(date()).getElapsedMonths() == 0;
 	}
-	
-	// 
-	
+
+    /**
+     *
+     * Add @TimeUnit
+     *
+     * @param unit
+     *
+     */
 	public DateBuilder add(TimeUnit unit) {
 
 		if (unit.isWorkingDay()) {
@@ -267,52 +311,115 @@ public final class DateBuilder {
 		return this;
 	}
 
+    /**
+     *
+     * Substract @TimeUnit
+     *
+     * @param unit
+     *
+     */
 	public DateBuilder subtract(TimeUnit unit) {
 		date.add(unit.getType(), -unit.getSize());
 		return this;
 	}
-	
+
+    /**
+     *
+     * Set this is equals
+     *
+     * @param date The to set equals
+     *
+     */
 	public DateBuilder setAsEqual(Date date) {
 		date.setTime(this.date.getTime().getTime());
 		return this;
 	}
 
+    /**
+     *
+     * Set this is equals
+     *
+     * @param calendar The to set equals
+     *
+     */
 	public DateBuilder setAsEqual(Calendar calendar) {
 		calendar.setTime(date.getTime());
 		return this;
 	}
 
+    /**
+     *
+     * Check is same date
+     *
+     * @param date Date to compare
+     *
+     */
 	public boolean isSameDayAs(Date date) {
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		return isSameDayAs(calendar);
 	}
-	
+
+    /**
+     *
+     * Check is same date
+     *
+     * @param calendar Date to compare
+     *
+     */
 	public boolean isSameDayAs(Calendar calendar) {
 		return (date.get(Calendar.ERA) == calendar.get(Calendar.ERA) &&
 				date.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
 				date.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR));
 	}
-	
-	public boolean isSameTimeAs(Date dateToCompare) {
+
+    /**
+     *
+     * Check is same time
+     *
+     * @param date Date to compare
+     *
+     */
+	public boolean isSameTimeAs(Date date) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(dateToCompare);
+		calendar.setTime(date);
 		return isSameTimeAs(calendar);
 		
 	}
-	
+
+    /**
+     *
+     * Check is same time
+     *
+     * @param calendar Date to compare
+     *
+     */
 	public boolean isSameTimeAs(Calendar calendar) {
 		return (date.get(Calendar.HOUR) == calendar.get(Calendar.HOUR) &&
 				date.get(Calendar.MINUTE) == calendar.get(Calendar.MINUTE) &&
 				date.get(Calendar.SECOND) == calendar.get(Calendar.SECOND) &&
 				date.get(Calendar.MILLISECOND) == calendar.get(Calendar.MILLISECOND));
 	}
-	
-	public boolean isSameAs(Date dateToCompare) {
-		return date.getTime().getTime() == dateToCompare.getTime();
+
+    /**
+     *
+     * Check is same datetime
+     *
+     * @param date Date to compare
+     *
+     */
+	public boolean isSameAs(Date date) {
+		return date.getTime() == date.getTime();
 	}
-	
+
+    /**
+     *
+     * Check is same datetime
+     *
+     * @param calendar Date to compare
+     *
+     */
 	public boolean isSameAs(Calendar calendar) {
 		return date.getTime().getTime() == calendar.getTime().getTime();
 	}
@@ -324,43 +431,93 @@ public final class DateBuilder {
 //	public boolean differenceInDays(Date date) {
 //		
 //	}
-	
+
+    /**
+     *
+     * Get millisecond
+     *
+     */
 	public int getMillisecond() {
 		return date.get(Calendar.MILLISECOND);
 	}
 
+    /**
+     *
+     * Get second
+     *
+     */
 	public int getSecond() {
 		return date.get(Calendar.SECOND);
 	}
 
+    /**
+     *
+     * Get minute
+     *
+     */
 	public int getMinute() {
 		return date.get(Calendar.MINUTE);
 	}
 
+    /**
+     *
+     * Get hour
+     *
+     */
 	public int getHour() {
 		return date.get(Calendar.HOUR);
 	}
 
+    /**
+     *
+     * Get Day Of Week
+     *
+     */
 	public int getDayOfWeek() {
 		return date.get(Calendar.DAY_OF_WEEK);
 	}
 
+    /**
+     *
+     * Get Week Of Month
+     *
+     */
 	public int getWeekMonth() {
 		return date.get(Calendar.WEEK_OF_MONTH);
 	}
 
+    /**
+     *
+     * Get Week Of Year
+     *
+     */
 	public int getWeekYear() {
 		return date.get(Calendar.WEEK_OF_YEAR);
 	}
 
+    /**
+     *
+     * Get Day Of Month
+     *
+     */
 	public int getDayOfMonth() {
 		return date.get(Calendar.DAY_OF_MONTH);
 	}
 
+    /**
+     *
+     * Get Month
+     *
+     */
 	public int getMonth() {
 		return date.get(Calendar.MONTH);
 	}
 
+    /**
+     *
+     * Get year
+     *
+     */
 	public int getYear() {
 		return date.get(Calendar.YEAR);
 	}
