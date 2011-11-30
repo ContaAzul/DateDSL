@@ -8,7 +8,9 @@ public final class DateDsl {
 	private DateDsl() {}
 	
 	public static DateBuilder date() {
-		return new DateBuilder();
+        Calendar cal = Calendar.getInstance();
+        cal.clear();
+        return new DateBuilder(cal.getTime());
 	}
 	
 	/**
@@ -67,19 +69,6 @@ public final class DateDsl {
 	public static DateBuilder yesterday() {
 		DateBuilder date = new DateBuilder(new Date());
 		return date.subtract(days(1));
-	}
-
-    /**
-     *
-     * Create the builder of empty date
-     *
-     * @return DateBuilder
-     *
-     */
-	public static DateBuilder emptyDate() {
-		Calendar cal = Calendar.getInstance();
-		cal.clear();
-		return new DateBuilder(cal.getTime());
 	}
 
     /**

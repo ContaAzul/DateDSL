@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import static com.unimondes.dsl.datedsl.DateDsl.date;
-import static com.unimondes.dsl.datedsl.DateDsl.emptyDate;
 
 public class TestDateBuilder {
 	
@@ -87,19 +86,19 @@ public class TestDateBuilder {
 	
 	@Test
 	public void testToString() {
-        String date = emptyDate().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toString();
+        String date = date().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toString();
         Assert.assertEquals("Fri Nov 09 00:00:00 BRT 1979", date);
 	}
 	
 	@Test
 	public void testToDate() {
-        Date date = emptyDate().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toDate();
+        Date date = date().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toDate();
         Assert.assertEquals(310964400000L, date.getTime());
 	}
 	
 	@Test
 	public void testToCalendar() {
-        Calendar date = emptyDate().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toCalendar();
+        Calendar date = date().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toCalendar();
         Assert.assertEquals(310964400000L, date.getTime().getTime());
 	}
 	
@@ -198,13 +197,13 @@ public class TestDateBuilder {
 	
 	@Test
 	public void testAdd() {
-		DateBuilder dateBuilder = emptyDate().withDayOfMonth(9).add(new TimeUnit(Calendar.DATE, 1));
+		DateBuilder dateBuilder = date().withDayOfMonth(9).add(new TimeUnit(Calendar.DATE, 1));
         Assert.assertEquals(10, dateBuilder.getDayOfMonth());
 	}
 	
 	@Test
 	public void testSubtract() {
-        DateBuilder dateBuilder = emptyDate().withDayOfMonth(9).subtract(new TimeUnit(Calendar.DATE, 1));
+        DateBuilder dateBuilder = date().withDayOfMonth(9).subtract(new TimeUnit(Calendar.DATE, 1));
         Assert.assertEquals(8, dateBuilder.getDayOfMonth());
 	}
 	
@@ -223,7 +222,7 @@ public class TestDateBuilder {
 	public void testIsSameDateAsDate() {
         Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
 
-        DateBuilder builder = emptyDate().withDayOfMonth(9)
+        DateBuilder builder = date().withDayOfMonth(9)
                                          .withMonth(Calendar.NOVEMBER)
                                          .withYear(1979);
 
@@ -234,7 +233,7 @@ public class TestDateBuilder {
 	public void testIsSameDateAsCalendar() {
         Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
 
-        DateBuilder builder = emptyDate().withDayOfMonth(9)
+        DateBuilder builder = date().withDayOfMonth(9)
                                          .withMonth(Calendar.NOVEMBER)
                                          .withYear(1979);
 
@@ -245,9 +244,9 @@ public class TestDateBuilder {
 	public void testIsSameTimeAsDate() {
         Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
 
-        DateBuilder builder = emptyDate().withHour(12)
-                                         .withMinute(30)
-                                         .withSecond(59);
+        DateBuilder builder = date().withHour(12)
+                                    .withMinute(30)
+                                    .withSecond(59);
 
         Assert.assertTrue(builder.isSameTimeAs(calendar.getTime()));
 	}
@@ -256,9 +255,9 @@ public class TestDateBuilder {
 	public void testIsSameTimeAsCalendar() {
         Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
 
-        DateBuilder builder = emptyDate().withHour(12)
-                                         .withMinute(30)
-                                         .withSecond(59);
+        DateBuilder builder = date().withHour(12)
+                                    .withMinute(30)
+                                    .withSecond(59);
 
         Assert.assertTrue(builder.isSameTimeAs(calendar.getTime()));
 	}
@@ -267,12 +266,12 @@ public class TestDateBuilder {
 	public void testIsSameAsDate() {
         Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
 
-        DateBuilder builder = emptyDate().withDayOfMonth(9)
-                                         .withMonth(Calendar.NOVEMBER)
-                                         .withYear(1979)
-                                         .withHour(12)
-                                         .withMinute(30)
-                                         .withSecond(59);
+        DateBuilder builder = date().withDayOfMonth(9)
+                                    .withMonth(Calendar.NOVEMBER)
+                                    .withYear(1979)
+                                    .withHour(12)
+                                    .withMinute(30)
+                                    .withSecond(59);
 
         Assert.assertTrue(builder.isSameAs(calendar.getTime()));
 	}
@@ -281,12 +280,12 @@ public class TestDateBuilder {
 	public void IsSameAsCalendar() {
         Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
 
-        DateBuilder builder = emptyDate().withDayOfMonth(9)
-                                         .withMonth(Calendar.NOVEMBER)
-                                         .withYear(1979)
-                                         .withHour(12)
-                                         .withMinute(30)
-                                         .withSecond(59);
+        DateBuilder builder = date().withDayOfMonth(9)
+                                    .withMonth(Calendar.NOVEMBER)
+                                    .withYear(1979)
+                                    .withHour(12)
+                                    .withMinute(30)
+                                    .withSecond(59);
 
         Assert.assertTrue(builder.isSameAs(calendar));
 	}
