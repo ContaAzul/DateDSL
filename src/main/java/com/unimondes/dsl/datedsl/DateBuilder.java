@@ -82,7 +82,7 @@ public final class DateBuilder {
 	 * 
 	 */
 	public DateBuilder withHour(int hour) {
-		date.set(Calendar.HOUR, hour);
+		date.set(Calendar.HOUR_OF_DAY, hour);
 		return this;
 	}
 
@@ -331,7 +331,7 @@ public final class DateBuilder {
      *
      */
 	public DateBuilder setAsEqual(Date date) {
-		date.setTime(this.date.getTime().getTime());
+        this.date.setTime(date);
 		return this;
 	}
 
@@ -343,7 +343,7 @@ public final class DateBuilder {
      *
      */
 	public DateBuilder setAsEqual(Calendar calendar) {
-		calendar.setTime(date.getTime());
+        this.date.setTime(calendar.getTime());
 		return this;
 	}
 
@@ -354,11 +354,10 @@ public final class DateBuilder {
      * @param date Date to compare
      *
      */
-	public boolean isSameDayAs(Date date) {
-		
+	public boolean isSameDateAs(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-		return isSameDayAs(calendar);
+		return isSameDateAs(calendar);
 	}
 
     /**
@@ -368,7 +367,7 @@ public final class DateBuilder {
      * @param calendar Date to compare
      *
      */
-	public boolean isSameDayAs(Calendar calendar) {
+	public boolean isSameDateAs(Calendar calendar) {
 		return (date.get(Calendar.ERA) == calendar.get(Calendar.ERA) &&
 				date.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) &&
 				date.get(Calendar.DAY_OF_YEAR) == calendar.get(Calendar.DAY_OF_YEAR));

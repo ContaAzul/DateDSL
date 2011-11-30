@@ -4,15 +4,18 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static com.unimondes.dsl.datedsl.DateDsl.date;
+import static com.unimondes.dsl.datedsl.DateDsl.emptyDate;
 
 public class TestDateBuilder {
 	
 	@Test
 	public void testWithMillisecond() {
-		Calendar date = date().withMillisecond(1200).toCalendar();
-		Assert.assertEquals(1200, date.get(Calendar.MILLISECOND));
+		Calendar date = date().withMillisecond(70).toCalendar();
+		Assert.assertEquals(70, date.get(Calendar.MILLISECOND));
 	}
 	
 	@Test
@@ -84,22 +87,26 @@ public class TestDateBuilder {
 	
 	@Test
 	public void testToString() {
-		Assert.fail("Not Implement");
+        String date = emptyDate().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toString();
+        Assert.assertEquals("Fri Nov 09 00:00:00 BRT 1979", date);
 	}
 	
 	@Test
 	public void testToDate() {
-		Assert.fail("Not Implement");
+        Date date = emptyDate().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toDate();
+        Assert.assertEquals(310964400000L, date.getTime());
 	}
 	
 	@Test
 	public void testToCalendar() {
-		Assert.fail("Not Implement");
+        Calendar date = emptyDate().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).toCalendar();
+        Assert.assertEquals(310964400000L, date.getTime().getTime());
 	}
 	
 	@Test
 	public void testFormat() {
-		Assert.fail("Not Implement");
+        String date = date().withDayOfMonth(9).withMonth(Calendar.NOVEMBER).withYear(1979).format("dd/MM/yyyy");
+        Assert.assertEquals("09/11/1979", date);
 	}
 	
 	@Test
@@ -136,7 +143,6 @@ public class TestDateBuilder {
 	public void testSundayIsWeekend() {
 		Assert.assertTrue(date().withDayOfWeek(Calendar.SUNDAY).isWeekend());
 	}
-	
 	
 	@Test
 	public void testTodayIsTodayDate() {
@@ -192,47 +198,97 @@ public class TestDateBuilder {
 	
 	@Test
 	public void testAdd() {
-		Assert.fail("Not Implement");
+		DateBuilder dateBuilder = emptyDate().withDayOfMonth(9).add(new TimeUnit(Calendar.DATE, 1));
+        Assert.assertEquals(10, dateBuilder.getDayOfMonth());
 	}
 	
 	@Test
 	public void testSubtract() {
-		Assert.fail("Not Implement");
+        DateBuilder dateBuilder = emptyDate().withDayOfMonth(9).subtract(new TimeUnit(Calendar.DATE, 1));
+        Assert.assertEquals(8, dateBuilder.getDayOfMonth());
 	}
 	
 	@Test
 	public void testSetAsEqualCalendar() {
-		Assert.fail("Not Implement");
+        Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
+
+        DateBuilder builder = date().setAsEqual(calendar);
+
+        Assert.assertEquals(calendar.get(Calendar.DAY_OF_MONTH), builder.getDayOfMonth());
+        Assert.assertEquals(calendar.get(Calendar.MONTH), builder.getMonth());
+        Assert.assertEquals(calendar.get(Calendar.YEAR), builder.getYear());
 	}
 	
 	@Test
-	public void testIsSameDayAsDate() {
-		Assert.fail("Not Implement");
+	public void testIsSameDateAsDate() {
+        Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
+
+        DateBuilder builder = emptyDate().withDayOfMonth(9)
+                                         .withMonth(Calendar.NOVEMBER)
+                                         .withYear(1979);
+
+        Assert.assertTrue(builder.isSameDateAs(calendar.getTime()));
 	}
 	
 	@Test
-	public void testIsSameDayAsCalendar() {
-		Assert.fail("Not Implement");
+	public void testIsSameDateAsCalendar() {
+        Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
+
+        DateBuilder builder = emptyDate().withDayOfMonth(9)
+                                         .withMonth(Calendar.NOVEMBER)
+                                         .withYear(1979);
+
+        Assert.assertTrue(builder.isSameDateAs(calendar));
 	}
 	
 	@Test
 	public void testIsSameTimeAsDate() {
-		Assert.fail("Not Implement");
+        Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
+
+        DateBuilder builder = emptyDate().withHour(12)
+                                         .withMinute(30)
+                                         .withSecond(59);
+
+        Assert.assertTrue(builder.isSameTimeAs(calendar.getTime()));
 	}
 	
 	@Test
 	public void testIsSameTimeAsCalendar() {
-		Assert.fail("Not Implement");
+        Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
+
+        DateBuilder builder = emptyDate().withHour(12)
+                                         .withMinute(30)
+                                         .withSecond(59);
+
+        Assert.assertTrue(builder.isSameTimeAs(calendar.getTime()));
 	}
 
 	@Test
 	public void testIsSameAsDate() {
-		Assert.fail("Not Implement");
+        Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
+
+        DateBuilder builder = emptyDate().withDayOfMonth(9)
+                                         .withMonth(Calendar.NOVEMBER)
+                                         .withYear(1979)
+                                         .withHour(12)
+                                         .withMinute(30)
+                                         .withSecond(59);
+
+        Assert.assertTrue(builder.isSameAs(calendar.getTime()));
 	}
 
 	@Test
 	public void IsSameAsCalendar() {
-		Assert.fail("Not Implement");
+        Calendar calendar = new GregorianCalendar(1979, Calendar.NOVEMBER, 9, 12, 30, 59);
+
+        DateBuilder builder = emptyDate().withDayOfMonth(9)
+                                         .withMonth(Calendar.NOVEMBER)
+                                         .withYear(1979)
+                                         .withHour(12)
+                                         .withMinute(30)
+                                         .withSecond(59);
+
+        Assert.assertTrue(builder.isSameAs(calendar));
 	}
 	
 	@Test
@@ -273,10 +329,10 @@ public class TestDateBuilder {
 	@Test
 	public void testGetWeekMonth() {
 		Calendar date = Calendar.getInstance();
-		date.set(Calendar.WEEK_OF_MONTH, 7);
-		Assert.assertEquals(7, date(date).getWeekMonth());
+		date.set(Calendar.WEEK_OF_MONTH, 10);
+		Assert.assertEquals(date.get(Calendar.WEEK_OF_MONTH), date(date).getWeekMonth());
 	}
-	
+
 	@Test
 	public void testGetWeekYear() {
 		Calendar date = Calendar.getInstance();
