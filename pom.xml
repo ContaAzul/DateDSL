@@ -2,35 +2,23 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.unimondes.dsl</groupId>
-	<artifactId>datedsl</artifactId>
-	<version>0.2</version>
-	<packaging>jar</packaging>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
+	<groupId>com.unimondes</groupId>
+	<artifactId>date-dsl</artifactId>
+	<version>0.1-SNAPSHOT</version>
 
 	<name>datedsl</name>
 	<url>https://github.com/danielpassos/datedsl</url>
 
-	<developers>
-		<developer>
-			<id>juliengaucher</id>
-			<name>Julien Gaucher</name>
-			<email>julien.mail@gmail.com</email>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<id>danielpassos</id>
-			<name>Daniel Passos</name>
-			<email>danpassos@gmail.com</email>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<timezone>-3</timezone>
-		</developer>
-	</developers>
-	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
 	<licenses>
 		<license>
 			<distribution>repo</distribution>
@@ -39,54 +27,32 @@
 		</license>
 	</licenses>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	<developers>
+		<developer>
+			<id>juliengaucher</id>
+			<name>Julien Gaucher</name>
+			<email>julien.mail@gmail.com</email>
+			<roles>
+				<role>creator</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>velo</id>
+			<name>Marvin Froeder</name>
+			<email>marvin at contaazul.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
-	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.8.1</version>
+			<version>4.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 </project>
