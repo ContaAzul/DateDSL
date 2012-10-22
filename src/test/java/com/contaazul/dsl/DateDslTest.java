@@ -1,17 +1,27 @@
-package com.unimondes.dsl;
+package com.contaazul.dsl;
 
-import static com.unimondes.dsl.DateDsl.*;
-import static org.junit.Assert.*;
+import static com.contaazul.dsl.DateDsl.date;
+import static com.contaazul.dsl.DateDsl.days;
+import static com.contaazul.dsl.DateDsl.emptyDate;
+import static com.contaazul.dsl.DateDsl.hours;
+import static com.contaazul.dsl.DateDsl.milliSecondes;
+import static com.contaazul.dsl.DateDsl.minutes;
+import static com.contaazul.dsl.DateDsl.now;
+import static com.contaazul.dsl.DateDsl.range;
+import static com.contaazul.dsl.DateDsl.tomorrow;
+import static com.contaazul.dsl.DateDsl.workingDays;
+import static com.contaazul.dsl.DateDsl.years;
+import static com.contaazul.dsl.DateDsl.yesterday;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Calendar;
 import java.util.Date;
 
 import org.junit.Test;
-
-import com.unimondes.dsl.DateDsl.DateBuilder;
-import com.unimondes.dsl.DateDsl.TimeRange;
-import com.unimondes.dsl.DateDsl.TimeUnit;
-
 
 /**
  * @author <a href="mailto:jgaucher@sedona.Fr">Julien Gaucher</a>

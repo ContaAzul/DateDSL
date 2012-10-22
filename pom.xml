@@ -8,7 +8,7 @@
 		<version>7</version>
 	</parent>
 
-	<groupId>com.unimondes</groupId>
+	<groupId>com.contaazul</groupId>
 	<artifactId>date-dsl</artifactId>
 	<version>0.1-SNAPSHOT</version>
 

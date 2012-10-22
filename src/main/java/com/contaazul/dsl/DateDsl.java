@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.unimondes.dsl;
+package com.contaazul.dsl;
 
 import static java.util.Calendar.*;
 
@@ -62,7 +62,7 @@ public class DateDsl {
 	}
 
 	/**
-	 * Creation du builder a l'aide d'une date précise.
+	 * Creation du builder a l'aide d'une date prï¿½cise.
 	 * @param date Date 
 	 * @return DateBuilder
 	 */
@@ -71,7 +71,7 @@ public class DateDsl {
 	}
 
 	/**
-	 * Creation du builder avec une date précise représentée par un 
+	 * Creation du builder avec une date prï¿½cise reprï¿½sentï¿½e par un 
 	 * Calendar.
 	 * @param calendar Calendar
 	 * @return DateBuilder
@@ -81,7 +81,7 @@ public class DateDsl {
 	}
 
 	/**
-	 * Création du builder initialisé a la date de création.
+	 * Crï¿½ation du builder initialisï¿½ a la date de crï¿½ation.
 	 * @return DateBuilder
 	 */
 	public static DateBuilder now() {
@@ -89,7 +89,7 @@ public class DateDsl {
 	}
 
 	/**
-	 * Création du builder initialisé a la date du lendemain (hh/mm/ss = celle de creation).
+	 * Crï¿½ation du builder initialisï¿½ a la date du lendemain (hh/mm/ss = celle de creation).
 	 * @return DateBuilder
 	 */
 	public static DateBuilder tomorrow() {
@@ -98,7 +98,7 @@ public class DateDsl {
 	}
 
 	/**
-	 * Création du builder initialisé a la date de la veille (hh/mm/ss = celle de creation).
+	 * Crï¿½ation du builder initialisï¿½ a la date de la veille (hh/mm/ss = celle de creation).
 	 * @return DateBuilder
 	 */
 	public static DateBuilder yesterday() {
@@ -340,7 +340,7 @@ public class DateDsl {
 		}
 
 		/**
-		 * seter pour l'année de la date.
+		 * seter pour l'annï¿½e de la date.
 		 * @param year
 		 * @return DateBuilder
 		 */
@@ -664,14 +664,14 @@ public class DateDsl {
 //		}
 
 		/**
-		 * Test si l'intersection entre les 2 périodes définies par les
-		dates en paramètres,
+		 * Test si l'intersection entre les 2 pï¿½riodes dï¿½finies par les
+		dates en paramï¿½tres,
 		 * est vide ou pas.
-		 * @param d1 le début de la première période
-		 * @param d2 la fin de la première période
-		 * @param d3 le début da la seconde période
-		 * @param d4 la fin de la seconde période
-		 * @return <code>true</code> ssi les 2 périodes ne se chevauchent
+		 * @param d1 le dï¿½but de la premiï¿½re pï¿½riode
+		 * @param d2 la fin de la premiï¿½re pï¿½riode
+		 * @param d3 le dï¿½but da la seconde pï¿½riode
+		 * @param d4 la fin de la seconde pï¿½riode
+		 * @return <code>true</code> ssi les 2 pï¿½riodes ne se chevauchent
 		pas ! (intersection on vide).
 		 */
 		public boolean isDistinctFrom(TimeRange range)  {
@@ -681,11 +681,11 @@ public class DateDsl {
 		}
 
 		/**
-		 * Calcule la différence en nombre de jours, mois, années entre 2 dates
-		 * @param dateDebut La date de début
+		 * Calcule la diffï¿½rence en nombre de jours, mois, annï¿½es entre 2 dates
+		 * @param dateDebut La date de dï¿½but
 		 * @param dateFin La date de fin
-		 * @param uniteMesure L'unité de mesure pour le calcul ; 'J' pour jour, 'M' pour mois, 'A' pour année
-		 * @return Le nombre d'unités de différence calculé.
+		 * @param uniteMesure L'unitï¿½ de mesure pour le calcul ; 'J' pour jour, 'M' pour mois, 'A' pour annï¿½e
+		 * @return Le nombre d'unitï¿½s de diffï¿½rence calculï¿½.
 		 */
 //		public  int getDifference(Date dateDebut, Date dateFin, char
 //				uniteMesure) {
@@ -699,15 +699,15 @@ public class DateDsl {
 //				GregorianCalendar(dateFin.getYear(),dateFin.getMonth(),dateFin.getDate());
 //
 //				while ( gcDebut.before(gcFin) ) {
-//					// Différentiel en nb de jours
+//					// Diffï¿½rentiel en nb de jours
 //					if (uniteMesure == 'J') {
 //						gcDebut.add(Calendar.DAY_OF_YEAR, 1);
 //					}
-//					// Différentiel en nb de mois
+//					// Diffï¿½rentiel en nb de mois
 //					else if (uniteMesure == 'M') {
 //						gcDebut.add(Calendar.MONTH, 1);
 //					}
-//					// Différentiel en nb d'années
+//					// Diffï¿½rentiel en nb d'annï¿½es
 //					else if (uniteMesure == 'A') {
 //						gcDebut.add(Calendar.YEAR, 1);
 //					}
