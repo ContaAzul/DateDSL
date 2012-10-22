@@ -381,6 +381,10 @@ public class DateDsl {
 		public int getHour() {
 			return date.get(Calendar.HOUR);
 		}
+		
+		public int getHourOfDay() {
+			return date.get(Calendar.HOUR_OF_DAY);
+		}
 
 		public int getDayOfWeek() {
 			return date.get(Calendar.DAY_OF_WEEK);

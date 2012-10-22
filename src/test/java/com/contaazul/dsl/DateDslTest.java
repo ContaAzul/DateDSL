@@ -11,7 +11,7 @@ import static com.contaazul.dsl.DateDsl.range;
 import static com.contaazul.dsl.DateDsl.tomorrow;
 import static com.contaazul.dsl.DateDsl.workingDays;
 import static com.contaazul.dsl.DateDsl.years;
-import static com.contaazul.dsl.DateDsl.yesterday;
+import static com.contaazul.dsl.DateDsl.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
@@ -23,14 +23,29 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import com.contaazul.dsl.DateDsl.DateBuilder;
+import com.contaazul.dsl.DateDsl.TimeRange;
+
 /**
  * @author <a href="mailto:jgaucher@sedona.Fr">Julien Gaucher</a>
  *
  */
 public class DateDslTest {
 
+	@Test
 	public void testDate() {
-		fail("Not yet implemented");
+		Calendar cal = Calendar.getInstance();
+		
+		Date date = date().toDate();
+		assertEquals(cal.get(Calendar.MILLISECOND), date(date).getMillisecond(), 20);
+		assertEquals(cal.get(Calendar.SECOND), date(date).getSecond());
+		assertEquals(cal.get(Calendar.MINUTE), date(date).getMinute());
+		assertEquals(cal.get(Calendar.HOUR_OF_DAY), date(date).getHourOfDay());
+		assertEquals(cal.get(Calendar.HOUR), date(date).getHour());
+		assertEquals(cal.get(Calendar.DAY_OF_MONTH), date(date).getDayOfMonth());
+		assertEquals(cal.get(Calendar.DAY_OF_WEEK), date(date).getDayOfWeek());
+		assertEquals(cal.get(Calendar.MONTH), date(date).getMonth());
+		assertEquals(cal.get(Calendar.YEAR), date(date).getYear());
 	}
 
 	@Test
@@ -88,7 +103,6 @@ public class DateDslTest {
 		Date date3 = new Date();
 		Date date4 = tomorrow().setAsEqual(date3).toDate();
 		assertEquals(date3, date4);
-		
 	}
 	
 	@Test
@@ -141,38 +155,115 @@ public class DateDslTest {
     	
     }
 
+	@Test
 	public void testMonths() {
-		fail("Not yet implemented");
+		DateBuilder dt = emptyDate();
+		assertEquals(Calendar.JANUARY, dt.getMonth());
+		
+		dt.add(months(2));
+		assertEquals(Calendar.MARCH, dt.getMonth());
+		
+		dt.subtract(months(1));
+		assertEquals(Calendar.FEBRUARY, dt.getMonth());
 	}
 
+	@Test
 	public void testYears() {
-		fail("Not yet implemented");
+		DateBuilder dt = emptyDate();
+		assertEquals(1970, dt.getYear());
+		
+		dt.add(years(2));
+		assertEquals(1972, dt.getYear());
+		
+		dt.subtract(years(1));
+		assertEquals(1971, dt.getYear());
 	}
 
+	@Test
 	public void testDays() {
-		fail("Not yet implemented");
+		DateBuilder dt = emptyDate();
+		assertEquals(1, dt.getDayOfMonth());
+		assertEquals(Calendar.THURSDAY, dt.getDayOfWeek());
+		
+		dt.add(days(31));
+		assertEquals(1, dt.getDayOfMonth());
+		assertEquals(Calendar.SUNDAY, dt.getDayOfWeek());
+		assertEquals(Calendar.FEBRUARY, dt.getMonth());
+		
+		dt.subtract(days(1));
+		assertEquals(31, dt.getDayOfMonth());
+		assertEquals(Calendar.SATURDAY, dt.getDayOfWeek());
+		assertEquals(Calendar.JANUARY, dt.getMonth());
 	}
 
+	@Test
 	public void testWorkingDays() {
-		fail("Not yet implemented");
+		DateBuilder dt = emptyDate();
+		assertEquals(1, dt.getDayOfMonth());
+		assertEquals(Calendar.THURSDAY, dt.getDayOfWeek());
+		
+		dt.add(workingDays(30));
+		assertEquals(12, dt.getDayOfMonth());
+		assertEquals(Calendar.THURSDAY, dt.getDayOfWeek());
+		assertEquals(Calendar.FEBRUARY, dt.getMonth());
+		
+		dt.subtract(days(3));
+		assertEquals(9, dt.getDayOfMonth());
+		assertEquals(Calendar.MONDAY, dt.getDayOfWeek());
+		assertEquals(Calendar.FEBRUARY, dt.getMonth());
 	}
 
+	@Test
 	public void testHours() {
-		fail("Not yet implemented");
+		DateBuilder dt = emptyDate();
+		assertEquals(0, dt.getHour());
+		assertEquals(0, dt.getHourOfDay());
+		assertEquals(1, dt.getDayOfMonth());
+		
+		dt.add(hours(50));
+		assertEquals(2, dt.getHour());
+		assertEquals(2, dt.getHourOfDay());
+		assertEquals(3, dt.getDayOfMonth());
+		
+		dt.subtract(hours(3));
+		assertEquals(11, dt.getHour());
+		assertEquals(23, dt.getHourOfDay());
+		assertEquals(2, dt.getDayOfMonth());
 	}
 
+	@Test
 	public void testMinutes() {
-		fail("Not yet implemented");
+		DateBuilder dt = emptyDate();
+		assertEquals(0, dt.getMinute());
+		assertEquals(0, dt.getHourOfDay());
+		
+		dt.add(minutes(150));
+		assertEquals(30, dt.getMinute());
+		assertEquals(2, dt.getHourOfDay());
+		
+		dt.subtract(minutes(31));
+		assertEquals(59, dt.getMinute());
+		assertEquals(1, dt.getHourOfDay());
 	}
 
+	@Test
 	public void testSecondes() {
-		fail("Not yet implemented");
+		DateBuilder dt = emptyDate();
+		assertEquals(0, dt.getSecond());
+		assertEquals(0, dt.getMinute());
+		
+		dt.add(secondes(500));
+		assertEquals(20, dt.getSecond());
+		assertEquals(8, dt.getMinute());
+		
+		dt.subtract(secondes(21));
+		assertEquals(59, dt.getSecond());
+		assertEquals(7, dt.getMinute());
 	}
 	
 	
 	@Test
 	public void testIsWeekend() {
-		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.DAY_OF_WEEK, Calendar.SATURDAY);
 		assertTrue(date(cal).isWeekend());
@@ -192,12 +283,10 @@ public class DateDslTest {
 		
 		Date date3 = cal.getTime();
 		assertFalse(date(date3).isWeekend());
-		
 	}
 	
 	@Test
 	public void testClearTime() {
-		
 		Calendar calNow = Calendar.getInstance();
 		
 		
@@ -214,13 +303,11 @@ public class DateDslTest {
 		assertEquals(calNow.get(Calendar.DAY_OF_MONTH), cal.get(Calendar.DAY_OF_MONTH));
 		assertEquals(calNow.get(Calendar.MONTH), cal.get(Calendar.MONTH));
 		assertEquals(calNow.get(Calendar.YEAR), cal.get(Calendar.YEAR));
-		
 	}
 	
 	
 	@Test
 	public void makeDate() {
-		
 		Date date = date().withYear(2008)
 			.withMonth(Calendar.JANUARY)
 			.withDayOfMonth(15)
@@ -241,23 +328,18 @@ public class DateDslTest {
 	
 	@Test
 	public void testFirstDayOfMonth() {
-		
 		Calendar testCal = Calendar.getInstance();
 		testCal.set(Calendar.MONTH, Calendar.MARCH);
 		testCal.set(Calendar.DAY_OF_MONTH, 1);
-		
-		
 		
 		Date date = now().withMonth(Calendar.MARCH).firstDayOfMonth().toDate();
 		
 		assertEquals(testCal.get(Calendar.DAY_OF_MONTH), date(date).getDayOfMonth());
 		assertEquals(testCal.get(Calendar.MONTH), date(date).getMonth());
-		
 	}
 	
 	@Test
 	public void testDsl() {
-		
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_MONTH, 2);
 		cal.set(Calendar.MILLISECOND, 0);
@@ -268,7 +350,6 @@ public class DateDslTest {
 		Date date = now().add(days(2)).clearTime().toDate();
 		
 		assertEquals(cal.getTime(), date);
-		
 	}
 	
 	@Test
@@ -277,10 +358,8 @@ public class DateDslTest {
 		cal.set(Calendar.MONTH, Calendar.JANUARY);
 		cal.set(Calendar.DAY_OF_MONTH, 4);
         
-		
 		Date date = date(cal).firstDayOfMonth().toDate();
 		assertEquals(1, date(date).getDayOfMonth());
-        
     }
     
 	@Test
@@ -295,8 +374,6 @@ public class DateDslTest {
 		cal.set(Calendar.MONTH, Calendar.APRIL);
 		Date date2 = date(cal).lastDayOfMonth().toDate();
 		assertEquals(30, date(date2).getDayOfMonth());
-        
-        
     }
     
 	@Test
@@ -315,7 +392,6 @@ public class DateDslTest {
 		Date date2 = date(cal).firstDayOfNextMonth().toDate();
 		assertEquals(1, date(date2).getDayOfMonth());
 		assertEquals(Calendar.FEBRUARY, date(date2).getMonth());
-        
     }
     
 	@Test
@@ -328,12 +404,9 @@ public class DateDslTest {
 		assertEquals(30, date(date).getDayOfMonth());
 		assertEquals(Calendar.APRIL, date(date).getMonth());
     }
-    
-	
 	
 	@Test
 	public void testAdd() {
-		
 		Calendar cal1 = Calendar.getInstance();
 		cal1.set(Calendar.MILLISECOND, 0);
 		cal1.set(Calendar.SECOND, 0);
@@ -361,7 +434,6 @@ public class DateDslTest {
 		Date date4 = date(cal1).add(workingDays(7)).clearTime().toDate();
 		assertEquals(Calendar.WEDNESDAY, date(date4).getDayOfWeek());
 		
-		
 		Calendar cal5 = Calendar.getInstance();
 		cal5.setTime(cal1.getTime());
 		cal5.set(Calendar.DAY_OF_WEEK, Calendar.FRIDAY);
@@ -369,7 +441,6 @@ public class DateDslTest {
 		Date mercredi = date(cal5).add(workingDays(3)).clearTime().toDate();
 		assertEquals(Calendar.MONDAY, date(lundi).getDayOfWeek());
 		assertEquals(Calendar.WEDNESDAY, date(mercredi).getDayOfWeek());
-		
 	}
 	
 	@Test
@@ -437,8 +508,6 @@ public class DateDslTest {
 					)
 				)
 		);
-		
-		
 	}
 	
 	@Test
@@ -456,29 +525,62 @@ public class DateDslTest {
 					.getElapsedDays()
 		);
 		
-		
+		assertEquals(
+				1830,
+				range().startWith(yesterday())
+						.endWith(now().add(years(5)).add(hours(50)))
+						.getElapsedDays());
 	}
 
 	@Test
 	public void rangeDateTimeUnit() {
-		fail("TODO");
+		Date past = new Date(0L);
+		Date future= new Date(Long.MAX_VALUE);
+		
+		assertTrue(range()
+		.startWith(past).endWith(future)
+		.contains(now()));
 	}
 	
 	@Test
 	public void rangeCalendarTimeUnit() {
-		fail("TODO");
+		Calendar past = Calendar.getInstance();
+		past.setTimeInMillis(0L);
+		Calendar future= Calendar.getInstance();
+		future.setTimeInMillis(Long.MAX_VALUE);
+		
+		assertTrue(range()
+		.startWith(past).endWith(future)
+		.contains(now()));
 	}
 	
 	@Test
 	public void rangeDateBuilderTimeUnit() {
-		fail("TODO");
+		assertTrue(range()
+				.startWith(yesterday()).endWith(tomorrow())
+				.contains(now()));
 	}
 	
 	
 	@Test 
 	public void testIsIn() {
-		
-		fail("TODO");
+		DateBuilder past = now().withYear(2005).withMonth(Calendar.JANUARY).withDayOfMonth(1).clearTime();
+		DateBuilder future = now().withYear(2006).withMonth(Calendar.DECEMBER).withDayOfMonth(31).clearTime();
+
+		TimeRange range = range()
+				.startWith(past).endWith(future);
+		assertTrue(range
+				.contains(now().withYear(2005)));
+		assertTrue(range
+				.contains(now().withYear(2006)));
+		assertFalse(range
+				.contains(now().withYear(2007)));
+		assertFalse(range
+				.contains(now().withYear(2004)));
+		assertTrue(range
+				.contains(past));
+		assertTrue(range
+				.contains(future));
 	}
 	
 	@Test 
@@ -498,39 +600,20 @@ public class DateDslTest {
 	
 	@Test 
 	public void containsDate() {
-		Date date = new Date();
-		
-		assertFalse(range().startWith(now()).endWith(tomorrow()).contains(yesterday()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(yesterday()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(now()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(tomorrow()));
-		assertFalse(range().startWith(now()).endWith(tomorrow()).contains(tomorrow().add(days(1))));
+		assertFalse(range().startWith(now()).endWith(tomorrow()).contains(yesterday().toDate()));
+		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(yesterday().toDate()));
+		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(now().toDate()));
+		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(tomorrow().toDate()));
+		assertFalse(range().startWith(now()).endWith(tomorrow()).contains(tomorrow().add(days(1)).toDate()));
 	}
 	
 	@Test 
 	public void containsCalendar() {
-		
-		fail("TODO");
+		assertFalse(range().startWith(now()).endWith(tomorrow()).contains(yesterday().toCalendar()));
+		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(yesterday().toCalendar()));
+		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(now().toCalendar()));
+		assertTrue(range().startWith(yesterday()).endWith(tomorrow()).contains(tomorrow().toCalendar()));
+		assertFalse(range().startWith(now()).endWith(tomorrow()).contains(tomorrow().add(days(1)).toCalendar()));
 	}
 	
-	@Test 
-	public void follow() {
-		
-		fail("TODO");
-	}
-	
-	
-	@Test
-	public void testArrache() {
-		
-		int nbDays = range()
-						.startWith(yesterday()).endWith(
-								now().add(years(5)).add(hours(50))
-						)
-						.getElapsedDays();
-		
-		
-		System.out.println(nbDays);
-	}
-
 }
