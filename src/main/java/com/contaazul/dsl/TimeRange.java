@@ -50,42 +50,6 @@ class TimeRange {
 	// this.size = size;
 	// }
 
-	public TimeRange startWith(final Date startDate) {
-		this.startDate = Calendar.getInstance();
-		this.startDate.setTime(startDate);
-		return this;
-	}
-
-	public TimeRange startWith(final Calendar startDate) {
-		this.startDate = Calendar.getInstance();
-		this.startDate.setTime(startDate.getTime());
-		return this;
-	}
-
-	public TimeRange startWith(final DateBuilder startDate) {
-		this.startDate = Calendar.getInstance();
-		this.startDate.setTime(startDate.toDate());
-		return this;
-	}
-
-	public TimeRange endWith(final Date endDate) {
-		this.endDate = Calendar.getInstance();
-		this.endDate.setTime(endDate);
-		return this;
-	}
-
-	public TimeRange endWith(final Calendar endDate) {
-		this.endDate = Calendar.getInstance();
-		this.endDate.setTime(endDate.getTime());
-		return this;
-	}
-
-	public TimeRange endWith(final DateBuilder endDate) {
-		this.endDate = Calendar.getInstance();
-		this.endDate.setTime(endDate.toDate());
-		return this;
-	}
-
 	public boolean contains(final Calendar date) {
 		return !date.before(startDate) && !date.after(endDate);
 	}
@@ -100,6 +64,62 @@ class TimeRange {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date.toDate());
 		return contains(calendar);
+	}
+
+	/**
+	 * All elaspsed types
+	 * 
+	 * @param g1
+	 *            GregorianCalendar
+	 * @param g2
+	 *            GregorianCalendar
+	 * @param type
+	 *            int (Calendar.FIELD_NAME)
+	 * 
+	 * @return int number of elapsed "type"
+	 */
+	private int elapsed(int type) {
+		GregorianCalendar gc1, gc2;
+		int elapsed = 0;
+		// Create copies since we will be clearing/adding
+		if (endDate.after(startDate)) {
+			gc2 = (GregorianCalendar) endDate.clone();
+			gc1 = (GregorianCalendar) startDate.clone();
+		} else {
+			gc2 = (GregorianCalendar) startDate.clone();
+			gc1 = (GregorianCalendar) endDate.clone();
+		}
+		if (type == Calendar.MONTH || type == Calendar.YEAR) {
+			gc1.clear(Calendar.DATE);
+			gc2.clear(Calendar.DATE);
+		}
+		if (type == Calendar.YEAR) {
+			gc1.clear(Calendar.MONTH);
+			gc2.clear(Calendar.MONTH);
+		}
+		while (gc1.before(gc2)) {
+			gc1.add(type, 1);
+			elapsed++;
+		}
+		return elapsed;
+	}
+
+	public TimeRange endWith(final Calendar endDate) {
+		this.endDate = Calendar.getInstance();
+		this.endDate.setTime(endDate.getTime());
+		return this;
+	}
+
+	public TimeRange endWith(final Date endDate) {
+		this.endDate = Calendar.getInstance();
+		this.endDate.setTime(endDate);
+		return this;
+	}
+
+	public TimeRange endWith(final DateBuilder endDate) {
+		this.endDate = Calendar.getInstance();
+		this.endDate.setTime(endDate.toDate());
+		return this;
 	}
 
 	/**
@@ -142,48 +162,6 @@ class TimeRange {
 	}
 
 	/**
-	 * All elaspsed types
-	 * 
-	 * @param g1
-	 *            GregorianCalendar
-	 * @param g2
-	 *            GregorianCalendar
-	 * @param type
-	 *            int (Calendar.FIELD_NAME)
-	 * 
-	 * @return int number of elapsed "type"
-	 */
-	private int elapsed(int type) {
-		GregorianCalendar gc1, gc2;
-		int elapsed = 0;
-		// Create copies since we will be clearing/adding
-		if (endDate.after(startDate)) {
-			gc2 = (GregorianCalendar) endDate.clone();
-			gc1 = (GregorianCalendar) startDate.clone();
-		} else {
-			gc2 = (GregorianCalendar) startDate.clone();
-			gc1 = (GregorianCalendar) endDate.clone();
-		}
-		if (type == Calendar.MONTH || type == Calendar.YEAR) {
-			gc1.clear(Calendar.DATE);
-			gc2.clear(Calendar.DATE);
-		}
-		if (type == Calendar.YEAR) {
-			gc1.clear(Calendar.MONTH);
-			gc2.clear(Calendar.MONTH);
-		}
-		while (gc1.before(gc2)) {
-			gc1.add(type, 1);
-			elapsed++;
-		}
-		return elapsed;
-	}
-
-	// public DateBuilder day() {
-
-	// }
-
-	/**
 	 * Test si l'intersection entre les 2 p�riodes d�finies par les dates en
 	 * param�tres, est vide ou pas.
 	 * 
@@ -204,6 +182,28 @@ class TimeRange {
 				.before(startDate))
 				|| (range.endDate.after(endDate) && range.startDate
 						.after(endDate));
+	}
+
+	public TimeRange startWith(final Calendar startDate) {
+		this.startDate = Calendar.getInstance();
+		this.startDate.setTime(startDate.getTime());
+		return this;
+	}
+
+	public TimeRange startWith(final Date startDate) {
+		this.startDate = Calendar.getInstance();
+		this.startDate.setTime(startDate);
+		return this;
+	}
+
+	// public DateBuilder day() {
+
+	// }
+
+	public TimeRange startWith(final DateBuilder startDate) {
+		this.startDate = Calendar.getInstance();
+		this.startDate.setTime(startDate.toDate());
+		return this;
 	}
 
 	/**

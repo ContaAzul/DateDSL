@@ -9,49 +9,21 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Simple Fluent interface for Date api.
- * use with <code>import static com.unimondes.dsl.DateDsl.*</code> 
+ * Simple Fluent interface for Date api. use with
+ * <code>import static com.unimondes.dsl.DateDsl.*</code>
+ * 
  * @author <a href="mailto:jgaucher@sedona.fr">Julien Gaucher</a>
  * @version 0.1
  */
 public class DateDsl {
-	
+
 	public static final String FORMAT_ = "";
 
-    public static TimeRange range() {
-		return new TimeRange();
-	}
-	
-	public static TimeRange range(Date date, TimeUnit size) {
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(date);
-		return new TimeRange(cal, size);
-	}
-	
-	public static TimeRange range(Calendar date, TimeUnit size) {
-		return new TimeRange(date, size);
-	}
-	
-	public static TimeRange range(DateBuilder date, TimeUnit size) {
-		return new TimeRange(date.toCalendar(), size);
-	}
-	
 	/**
-	 * Creation d'une date au 1er janvier 1970 00h00m00s00ms, qui est la date
-	 * du debut de l'univers comme tout unixien le sait.
-	 * @return DateBuilder
-	 */
-	public static DateBuilder emptyDate() {
-
-		Calendar cal = Calendar.getInstance();
-		cal.clear();
-		return new DateBuilder(cal.getTime());
-	}
-
-	/**
-	 * Creation du builder (par defaut a la date du jour)
-	 * placer les valeurs a l'aide des methodes withXXXX();
-	 * exemple : date().withYear(2008").withMonth(Calendar.JANUARY).toDate();
+	 * Creation du builder (par defaut a la date du jour) placer les valeurs a
+	 * l'aide des methodes withXXXX(); exemple :
+	 * date().withYear(2008").withMonth(Calendar.JANUARY).toDate();
+	 * 
 	 * @return DateBuilder
 	 */
 	public static DateBuilder date() {
@@ -59,31 +31,29 @@ public class DateDsl {
 	}
 
 	/**
-	 * Creation du builder a l'aide d'une date pr�cise.
-	 * @param date Date 
-	 * @return DateBuilder
-	 */
-	public static DateBuilder date(Date date) {
-		return new DateBuilder(date);
-	}
-
-	/**
-	 * Creation du builder avec une date pr�cise repr�sent�e par un 
-	 * Calendar.
-	 * @param calendar Calendar
+	 * Creation du builder avec une date pr�cise repr�sent�e par un Calendar.
+	 * 
+	 * @param calendar
+	 *            Calendar
 	 * @return DateBuilder
 	 */
 	public static DateBuilder date(Calendar calendar) {
 		return new DateBuilder(calendar);
 	}
 
-	public static DateBuilder date(
-			int year,
-			Months monthOfYear,
-			int dayOfMonth,
-			int hourOfDay,
-			int minuteOfHour,
-			int secondOfMinute,
+	/**
+	 * Creation du builder a l'aide d'une date pr�cise.
+	 * 
+	 * @param date
+	 *            Date
+	 * @return DateBuilder
+	 */
+	public static DateBuilder date(Date date) {
+		return new DateBuilder(date);
+	}
+
+	public static DateBuilder date(int year, int monthOfYear, int dayOfMonth,
+			int hourOfDay, int minuteOfHour, int secondOfMinute,
 			int millisOfSecond) {
 		DateBuilder db = new DateBuilder();
 		db.withYear(year);
@@ -93,40 +63,97 @@ public class DateDsl {
 		db.withMinute(minuteOfHour);
 		db.withSecond(secondOfMinute);
 		db.withMillisecond(millisOfSecond);
-		
+
 		return db;
 	}
-	
-    public static DateBuilder date(
-            int year,
-            int monthOfYear,
-            int dayOfMonth,
-            int hourOfDay,
-            int minuteOfHour,
-            int secondOfMinute,
-            int millisOfSecond) {
-    			DateBuilder db = new DateBuilder();
-    			db.withYear(year);
-    			db.withMonth(monthOfYear);
-    			db.withDayOfMonth(dayOfMonth);
-    			db.withHourOfDay(hourOfDay);
-    			db.withMinute(minuteOfHour);
-    			db.withSecond(secondOfMinute);
-    			db.withMillisecond(millisOfSecond);
 
-               return db;
-    }
-    
+	public static DateBuilder date(int year, Months monthOfYear,
+			int dayOfMonth, int hourOfDay, int minuteOfHour,
+			int secondOfMinute, int millisOfSecond) {
+		DateBuilder db = new DateBuilder();
+		db.withYear(year);
+		db.withMonth(monthOfYear);
+		db.withDayOfMonth(dayOfMonth);
+		db.withHourOfDay(hourOfDay);
+		db.withMinute(minuteOfHour);
+		db.withSecond(secondOfMinute);
+		db.withMillisecond(millisOfSecond);
+
+		return db;
+	}
+
+	public static TimeUnit days(int n) {
+		return new TimeUnit(DAY_OF_MONTH, n);
+	}
+
+	/**
+	 * Creation d'une date au 1er janvier 1970 00h00m00s00ms, qui est la date du
+	 * debut de l'univers comme tout unixien le sait.
+	 * 
+	 * @return DateBuilder
+	 */
+	public static DateBuilder emptyDate() {
+
+		Calendar cal = Calendar.getInstance();
+		cal.clear();
+		return new DateBuilder(cal.getTime());
+	}
+
+	public static TimeUnit hours(int n) {
+		return new TimeUnit(HOUR, n);
+	}
+
+	public static TimeUnit milliSecondes(int n) {
+		return new TimeUnit(MILLISECOND, n);
+	}
+
+	public static TimeUnit minutes(int n) {
+		return new TimeUnit(MINUTE, n);
+	}
+
+	public static TimeUnit months(int n) {
+		return new TimeUnit(MONTH, n);
+	}
+
+	public static TimeUnit months(Months n) {
+		return new TimeUnit(MONTH, n.calendaMonth);
+	}
+
 	/**
 	 * Cr�ation du builder initialis� a la date de cr�ation.
+	 * 
 	 * @return DateBuilder
 	 */
 	public static DateBuilder now() {
 		return new DateBuilder();
 	}
 
+	public static TimeRange range() {
+		return new TimeRange();
+	}
+
+	public static TimeRange range(Calendar date, TimeUnit size) {
+		return new TimeRange(date, size);
+	}
+
+	public static TimeRange range(Date date, TimeUnit size) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return new TimeRange(cal, size);
+	}
+
+	public static TimeRange range(DateBuilder date, TimeUnit size) {
+		return new TimeRange(date.toCalendar(), size);
+	}
+
+	public static TimeUnit secondes(int n) {
+		return new TimeUnit(SECOND, n);
+	}
+
 	/**
-	 * Cr�ation du builder initialis� a la date du lendemain (hh/mm/ss = celle de creation).
+	 * Cr�ation du builder initialis� a la date du lendemain (hh/mm/ss = celle
+	 * de creation).
+	 * 
 	 * @return DateBuilder
 	 */
 	public static DateBuilder tomorrow() {
@@ -134,48 +161,22 @@ public class DateDsl {
 		return date.add(days(1));
 	}
 
-	/**
-	 * Cr�ation du builder initialis� a la date de la veille (hh/mm/ss = celle de creation).
-	 * @return DateBuilder
-	 */
-	public static DateBuilder yesterday() {
-		DateBuilder date = new DateBuilder(new Date());
-		return date.subtract(days(1));
-	}
-
-	public static TimeUnit months(int n) {
-		return new TimeUnit(MONTH, n);
-	}
-	
-	public static TimeUnit months(Months n) {
-		return new TimeUnit(MONTH, n.calendaMonth);
+	public static TimeUnit workingDays(int n) {
+		return new TimeUnit(DAY_OF_MONTH, n, true);
 	}
 
 	public static TimeUnit years(int n) {
 		return new TimeUnit(YEAR, n);
 	}
 
-	public static TimeUnit days(int n) {
-		return new TimeUnit(DAY_OF_MONTH, n);
-	}
-
-	public static TimeUnit workingDays(int n) {
-		return new TimeUnit(DAY_OF_MONTH, n, true);
-	}
-
-	public static TimeUnit hours(int n) {
-		return new TimeUnit(HOUR, n);
-	}
-
-	public static TimeUnit minutes(int n) {
-		return new TimeUnit(MINUTE, n);
-	}
-
-	public static TimeUnit secondes(int n) {
-		return new TimeUnit(SECOND, n);
-	}
-
-	public static TimeUnit milliSecondes(int n) {
-		return new TimeUnit(MILLISECOND, n);
+	/**
+	 * Cr�ation du builder initialis� a la date de la veille (hh/mm/ss = celle
+	 * de creation).
+	 * 
+	 * @return DateBuilder
+	 */
+	public static DateBuilder yesterday() {
+		DateBuilder date = new DateBuilder(new Date());
+		return date.subtract(days(1));
 	}
 }
