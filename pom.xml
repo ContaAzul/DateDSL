@@ -11,9 +11,11 @@
 	<groupId>com.contaazul</groupId>
 	<artifactId>date-dsl</artifactId>
 	<version>0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
-	<name>datedsl</name>
-	<url>https://github.com/danielpassos/datedsl</url>
+	<name>DateDSL</name>
+	<description>Simple fluent interface for java date api.</description>
+	<url>https://github.com/ContaAzul/DateDSL</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -26,6 +28,12 @@
 			<url>http://apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
+
+	<scm>
+		<url>https://github.com/ContaAzul/DateDSL</url>
+		<connection>scm:git:git://github.com/ContaAzul/DateDSL.git</connection>
+		<developerConnection>scm:git:https://github.com/ContaAzul/DateDSL.git</developerConnection>
+	</scm>
 
 	<developers>
 		<developer>
