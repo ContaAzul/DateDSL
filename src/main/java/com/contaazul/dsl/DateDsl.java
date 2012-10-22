@@ -20,6 +20,31 @@ public class DateDsl {
 	
 	public static final String FORMAT_ = "";
 
+    public enum Months{
+        JANUARY(Calendar.JANUARY), FEBRUARY(Calendar.FEBRUARY), MARCH(
+                        Calendar.MARCH), APRIL(Calendar.APRIL), MAY(Calendar.MAY), JUNE(
+                        Calendar.JUNE), JULY(Calendar.JULY), AUGUST(Calendar.AUGUST), SEPTEMBER(
+                        Calendar.SEPTEMBER), OCTOBER(Calendar.OCTOBER), NOVEMBER(
+                        Calendar.NOVEMBER), DECEMBER(Calendar.DECEMBER);
+
+        private final int calendaMonth;
+
+        Months(int calendaMonth) {
+                this.calendaMonth = calendaMonth;
+        }
+    }
+    
+    public enum WeekDays{
+    	SUNDAY(Calendar.SUNDAY), MONDAY(Calendar.MONDAY), THURSDAY(
+    			Calendar.THURSDAY), WEDNESDAY(Calendar.WEDNESDAY), TUESDAY(Calendar.TUESDAY), FRIDAY(
+    					Calendar.FRIDAY), SATURDAY(Calendar.SATURDAY);
+    	
+    	private final int calendaWeekday;
+    	
+    	WeekDays(int calendaWeekDay) {
+    		this.calendaWeekday = calendaWeekDay;
+    	}
+    }
 
 	public static TimeRange range() {
 		return new TimeRange();
@@ -80,6 +105,46 @@ public class DateDsl {
 		return new DateBuilder(calendar);
 	}
 
+	public static DateBuilder date(
+			int year,
+			Months monthOfYear,
+			int dayOfMonth,
+			int hourOfDay,
+			int minuteOfHour,
+			int secondOfMinute,
+			int millisOfSecond) {
+		DateBuilder db = new DateBuilder();
+		db.withYear(year);
+		db.withMonth(monthOfYear);
+		db.withDayOfMonth(dayOfMonth);
+		db.withHourOfDay(hourOfDay);
+		db.withMinute(minuteOfHour);
+		db.withSecond(secondOfMinute);
+		db.withMillisecond(millisOfSecond);
+		
+		return db;
+	}
+	
+    public static DateBuilder date(
+            int year,
+            int monthOfYear,
+            int dayOfMonth,
+            int hourOfDay,
+            int minuteOfHour,
+            int secondOfMinute,
+            int millisOfSecond) {
+    			DateBuilder db = new DateBuilder();
+    			db.withYear(year);
+    			db.withMonth(monthOfYear);
+    			db.withDayOfMonth(dayOfMonth);
+    			db.withHourOfDay(hourOfDay);
+    			db.withMinute(minuteOfHour);
+    			db.withSecond(secondOfMinute);
+    			db.withMillisecond(millisOfSecond);
+
+               return db;
+    }
+    
 	/**
 	 * Cr�ation du builder initialis� a la date de cr�ation.
 	 * @return DateBuilder
@@ -108,6 +173,10 @@ public class DateDsl {
 
 	public static TimeUnit months(int n) {
 		return new TimeUnit(MONTH, n);
+	}
+	
+	public static TimeUnit months(Months n) {
+		return new TimeUnit(MONTH, n.calendaMonth);
 	}
 
 	public static TimeUnit years(int n) {
@@ -307,6 +376,11 @@ public class DateDsl {
 			return this;
 		}
 
+		public DateBuilder withHourOfDay(int hour) {
+			date.set(HOUR_OF_DAY, hour);
+			return this;
+		}
+
 		/**
 		 * seter pour le jours de la semaine 
 		 * de la date (LUNDI/MARDI etc.).
@@ -315,6 +389,11 @@ public class DateDsl {
 		 */
 		public DateBuilder withDayOfWeek(int day) {
 			date.set(DAY_OF_WEEK, day);
+			return this;
+		}
+		
+		public DateBuilder withDayOfWeek(WeekDays day) {
+			date.set(DAY_OF_WEEK, day.calendaWeekday);
 			return this;
 		}
 
@@ -336,6 +415,11 @@ public class DateDsl {
 		 */
 		public DateBuilder withMonth(int month) {
 			date.set(MONTH, month);
+			return this;
+		}
+		
+		public DateBuilder withMonth(Months month) {
+			date.set(MONTH, month.calendaMonth);
 			return this;
 		}
 
@@ -390,6 +474,10 @@ public class DateDsl {
 			return date.get(Calendar.DAY_OF_WEEK);
 		}
 
+		public WeekDays getWeekDay() {
+			return WeekDays.values()[date.get(Calendar.DAY_OF_WEEK)];
+		}
+		
 		public int getWeekMonth() {
 			return date.get(Calendar.WEEK_OF_MONTH);
 		}
@@ -406,6 +494,10 @@ public class DateDsl {
 			return date.get(Calendar.MONTH);
 		}
 
+		public Months getMonths() {
+			return Months.values()[date.get(Calendar.MONTH)];
+		}
+		
 		public int getYear() {
 			return date.get(Calendar.YEAR);
 		}
