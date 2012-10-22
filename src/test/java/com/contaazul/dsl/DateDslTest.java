@@ -24,8 +24,6 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import com.contaazul.dsl.DateDsl.DateBuilder;
-import com.contaazul.dsl.DateDsl.TimeRange;
 
 /**
  * @author <a href="mailto:jgaucher@sedona.Fr">Julien Gaucher</a>
