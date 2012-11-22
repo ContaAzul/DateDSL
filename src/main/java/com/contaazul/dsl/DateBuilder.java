@@ -416,4 +416,42 @@ public final class DateBuilder {
 		date.set(YEAR, year);
 		return this;
 	}
+
+	public boolean isFuture() {
+		return date.after(Calendar.getInstance());
+	}
+
+	public boolean isPast() {
+		return date.before(Calendar.getInstance());
+	}
+
+	public boolean before(Calendar dt) {
+		return date.before(dt);
+	}
+
+	public boolean before(DateBuilder dt) {
+		return before(dt.toCalendar());
+	}
+
+	public boolean before(Date dt) {
+		return before(DateDsl.date(dt));
+	}
+	
+	public boolean after(Calendar dt) {
+		return date.after(dt);
+	}
+	
+	public boolean after(DateBuilder dt) {
+		return after(dt.toCalendar());
+	}
+	
+	public boolean after(Date dt) {
+		return after(DateDsl.date(dt));
+	}
+
+	public boolean isToday() {
+		return isSameDayAs(new Date());
+	}
+
+	
 }
