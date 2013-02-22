@@ -1,6 +1,6 @@
 package com.contaazul.dsl;
 
-class TimeUnit {
+public class TimeUnit {
 
 	final int type;
 
@@ -18,4 +18,13 @@ class TimeUnit {
 		this.size = size;
 		this.workingDay = true;
 	}
+
+	public int getType() {
+		return type;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
 }
