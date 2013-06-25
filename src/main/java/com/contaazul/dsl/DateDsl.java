@@ -3,7 +3,13 @@
  */
 package com.contaazul.dsl;
 
-import static java.util.Calendar.*;
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.HOUR;
+import static java.util.Calendar.MILLISECOND;
+import static java.util.Calendar.MINUTE;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.SECOND;
+import static java.util.Calendar.YEAR;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -52,6 +58,10 @@ public class DateDsl {
 		return new DateBuilder(date);
 	}
 
+	public static DateBuilder date(int year, int monthOfYear, int dayOfMonth) {
+		return date( year, monthOfYear, dayOfMonth, 0, 0, 0, 0 );
+	}
+
 	public static DateBuilder date(int year, int monthOfYear, int dayOfMonth,
 			int hourOfDay, int minuteOfHour, int secondOfMinute,
 			int millisOfSecond) {
@@ -67,6 +77,10 @@ public class DateDsl {
 		return db;
 	}
 
+	public static DateBuilder date(int year, Months monthOfYear, int dayOfMonth) {
+		return date( year, monthOfYear, dayOfMonth, 0, 0, 0, 0 );
+	}
+
 	public static DateBuilder date(int year, Months monthOfYear,
 			int dayOfMonth, int hourOfDay, int minuteOfHour,
 			int secondOfMinute, int millisOfSecond) {
@@ -80,6 +94,10 @@ public class DateDsl {
 		db.withMillisecond(millisOfSecond);
 
 		return db;
+	}
+
+	public static TimeUnit day() {
+		return days( 1 );
 	}
 
 	public static TimeUnit days(int n) {
@@ -99,16 +117,32 @@ public class DateDsl {
 		return new DateBuilder(cal.getTime());
 	}
 
+	public static TimeUnit hour() {
+		return hours( 1 );
+	}
+
 	public static TimeUnit hours(int n) {
 		return new TimeUnit(HOUR, n);
+	}
+
+	public static TimeUnit milliSecond() {
+		return milliSecondes( 1 );
 	}
 
 	public static TimeUnit milliSecondes(int n) {
 		return new TimeUnit(MILLISECOND, n);
 	}
 
+	public static TimeUnit minute() {
+		return minutes( 1 );
+	}
+
 	public static TimeUnit minutes(int n) {
 		return new TimeUnit(MINUTE, n);
+	}
+
+	public static TimeUnit month() {
+		return months( 1 );
 	}
 
 	public static TimeUnit months(int n) {
@@ -146,6 +180,10 @@ public class DateDsl {
 		return new TimeRange(date.toCalendar(), size);
 	}
 
+	public static TimeUnit second() {
+		return secondes( 1 );
+	}
+
 	public static TimeUnit secondes(int n) {
 		return new TimeUnit(SECOND, n);
 	}
@@ -163,6 +201,10 @@ public class DateDsl {
 
 	public static TimeUnit workingDays(int n) {
 		return new TimeUnit(DAY_OF_MONTH, n, true);
+	}
+
+	public static TimeUnit year() {
+		return years( 1 );
 	}
 
 	public static TimeUnit years(int n) {
