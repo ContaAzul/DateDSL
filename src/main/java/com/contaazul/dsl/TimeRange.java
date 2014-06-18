@@ -1,5 +1,9 @@
 package com.contaazul.dsl;
 
+import static com.contaazul.dsl.DateDsl.date;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.WEEK_OF_MONTH;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -215,6 +219,20 @@ public class TimeRange {
 		this.startDate = Calendar.getInstance();
 		this.startDate.setTime(startDate.toDate());
 		return this;
+	}
+
+	public int getMonthsBetween() {
+		return roundDown(getElapsedMonths(), MONTH);
+	}
+
+	public int getWeeksBetween() {
+		return roundDown(getElapsedWeeks(), WEEK_OF_MONTH);
+	}
+
+	private int roundDown(int value, int type) {
+		if (date(startDate).add(new TimeUnit(type, value)).after(date(endDate)))
+			return value - 1;
+		return value;
 	}
 
 	/**

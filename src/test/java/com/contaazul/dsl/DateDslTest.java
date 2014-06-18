@@ -639,4 +639,23 @@ public class DateDslTest {
 		assertEquals(date3, date4);
 	}
 
+	@Test
+	public void monthsBeetween() throws Exception {
+		assertEquals(9,
+				range().startWith(date(2014, 1, 10))
+						.endWith(date(2014, 10, 14)).getMonthsBetween());
+		assertEquals(8,
+				range().startWith(date(2014, 1, 10))
+						.endWith(date(2014, 10, 8)).getMonthsBetween());
+	}
+
+	@Test
+	public void weeksBeetween() throws Exception {
+		assertEquals(2,
+				range().startWith(date(2014, 6, 4))
+						.endWith(date(2014, 6, 19)).getWeeksBetween());
+		assertEquals(6,
+				range().startWith(date(2014, 6, 4))
+						.endWith(date(2014, 7, 19)).getWeeksBetween());
+	}
 }
