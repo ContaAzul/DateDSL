@@ -6,6 +6,7 @@ import static com.contaazul.dsl.DateDsl.emptyDate;
 import static com.contaazul.dsl.DateDsl.hours;
 import static com.contaazul.dsl.DateDsl.milliSecondes;
 import static com.contaazul.dsl.DateDsl.minutes;
+import static com.contaazul.dsl.DateDsl.month;
 import static com.contaazul.dsl.DateDsl.months;
 import static com.contaazul.dsl.DateDsl.now;
 import static com.contaazul.dsl.DateDsl.range;
@@ -351,17 +352,63 @@ public class DateDslTest {
 	@Test
 	public void testGetElapsedDays() {
 
-		assertEquals(1, range().startWith(yesterday()).endWith(now())
-				.getElapsedDays());
+		assertEquals(
+				1,
+				range().startWith(yesterday().clearTime())
+						.endWith(now().clearTime())
+						.getElapsedDays());
 
-		assertEquals(2, range().startWith(yesterday()).endWith(tomorrow())
-				.getElapsedDays());
+		assertEquals(
+				2,
+				range().startWith(yesterday().clearTime())
+						.endWith(tomorrow().clearTime())
+						.getElapsedDays());
 
 		assertEquals(
 				1830,
-				range().startWith(yesterday())
+				range().startWith(yesterday().clearTime())
 						.endWith(now().add(years(5)).add(hours(50)))
 						.getElapsedDays());
+	}
+
+	@Test
+	public void testGetElapsedMonths() {
+		assertEquals(
+				1,
+				range().startWith(
+						now().subtract(month()).clearTime().firstDayOfMonth())
+						.endWith(now().clearTime().firstDayOfMonth())
+						.getElapsedMonths());
+
+		assertEquals(
+				10,
+				range().startWith(
+						now().subtract(months(10)).clearTime()
+								.firstDayOfMonth())
+						.endWith(now().clearTime().firstDayOfMonth())
+						.getElapsedMonths());
+	}
+
+	@Test
+	public void testGetElapsedWeeks() {
+		assertEquals(
+				2,
+				range().startWith(
+						now().clearTime().add(days(8)))
+						.endWith(now().clearTime())
+						.getElapsedWeeks());
+		assertEquals(
+				3,
+				range().startWith(
+						now().clearTime())
+						.endWith(now().clearTime().add(days(20)))
+						.getElapsedWeeks());
+		assertEquals(
+				18,
+				range().startWith(
+						now().clearTime())
+						.endWith(now().clearTime().add(days(120)))
+						.getElapsedWeeks());
 	}
 
 	@Test
