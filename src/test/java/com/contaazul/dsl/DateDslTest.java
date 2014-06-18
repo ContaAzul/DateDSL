@@ -66,18 +66,21 @@ public class DateDslTest {
 
 	@Test
 	public void containsDateBuilder() {
-
-		assertFalse(range().startWith(now()).endWith(tomorrow())
-				.contains(yesterday()));
-
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(yesterday()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(now()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(tomorrow()));
-		assertFalse(range().startWith(now()).endWith(tomorrow())
-				.contains(tomorrow().add(days(1))));
+		assertFalse(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2013, 12, 31)));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 2)));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 2)));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 3)));
+		assertFalse(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 4)));
 	}
 
 	@Test
