@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-class TimeRange {
+public class TimeRange {
 
 	// range().last(days(2).last(hours(3))
 	// range().startWith(date).endWith(date).elapsedTime()
