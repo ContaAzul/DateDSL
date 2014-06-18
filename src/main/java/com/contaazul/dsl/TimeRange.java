@@ -162,6 +162,17 @@ public class TimeRange {
 	}
 
 	/**
+	 * Elapsed weeks based on current time
+	 * 
+	 * @param date
+	 *            Date
+	 * @return int number of weeks ROUNDED UP
+	 */
+	public int getElapsedWeeks() {
+		return elapsed(Calendar.WEEK_OF_MONTH);
+	}
+
+	/**
 	 * Test si l'intersection entre les 2 p�riodes d�finies par les dates en
 	 * param�tres, est vide ou pas.
 	 * 
