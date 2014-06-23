@@ -9,6 +9,7 @@ import static java.util.Calendar.MILLISECOND;
 import static java.util.Calendar.MINUTE;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.SECOND;
+import static java.util.Calendar.WEEK_OF_MONTH;
 import static java.util.Calendar.YEAR;
 
 import java.util.Calendar;
@@ -59,7 +60,7 @@ public class DateDsl {
 	}
 
 	public static DateBuilder date(int year, int monthOfYear, int dayOfMonth) {
-		return date( year, monthOfYear, dayOfMonth, 0, 0, 0, 0 );
+		return date(year, monthOfYear, dayOfMonth, 0, 0, 0, 0);
 	}
 
 	public static DateBuilder date(int year, int monthOfYear, int dayOfMonth,
@@ -78,7 +79,7 @@ public class DateDsl {
 	}
 
 	public static DateBuilder date(int year, Months monthOfYear, int dayOfMonth) {
-		return date( year, monthOfYear, dayOfMonth, 0, 0, 0, 0 );
+		return date(year, monthOfYear, dayOfMonth, 0, 0, 0, 0);
 	}
 
 	public static DateBuilder date(int year, Months monthOfYear,
@@ -97,11 +98,19 @@ public class DateDsl {
 	}
 
 	public static TimeUnit day() {
-		return days( 1 );
+		return days(1);
 	}
 
 	public static TimeUnit days(int n) {
 		return new TimeUnit(DAY_OF_MONTH, n);
+	}
+
+	public static TimeUnit week() {
+		return weeks(1);
+	}
+
+	public static TimeUnit weeks(int n) {
+		return new TimeUnit(WEEK_OF_MONTH, n);
 	}
 
 	/**
@@ -111,14 +120,13 @@ public class DateDsl {
 	 * @return DateBuilder
 	 */
 	public static DateBuilder emptyDate() {
-
 		Calendar cal = Calendar.getInstance();
 		cal.clear();
 		return new DateBuilder(cal.getTime());
 	}
 
 	public static TimeUnit hour() {
-		return hours( 1 );
+		return hours(1);
 	}
 
 	public static TimeUnit hours(int n) {
@@ -126,7 +134,7 @@ public class DateDsl {
 	}
 
 	public static TimeUnit milliSecond() {
-		return milliSecondes( 1 );
+		return milliSecondes(1);
 	}
 
 	public static TimeUnit milliSecondes(int n) {
@@ -134,7 +142,7 @@ public class DateDsl {
 	}
 
 	public static TimeUnit minute() {
-		return minutes( 1 );
+		return minutes(1);
 	}
 
 	public static TimeUnit minutes(int n) {
@@ -142,7 +150,7 @@ public class DateDsl {
 	}
 
 	public static TimeUnit month() {
-		return months( 1 );
+		return months(1);
 	}
 
 	public static TimeUnit months(int n) {
@@ -181,7 +189,7 @@ public class DateDsl {
 	}
 
 	public static TimeUnit second() {
-		return secondes( 1 );
+		return secondes(1);
 	}
 
 	public static TimeUnit secondes(int n) {
@@ -204,7 +212,7 @@ public class DateDsl {
 	}
 
 	public static TimeUnit year() {
-		return years( 1 );
+		return years(1);
 	}
 
 	public static TimeUnit years(int n) {
