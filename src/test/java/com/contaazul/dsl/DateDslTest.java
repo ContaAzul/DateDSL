@@ -33,46 +33,59 @@ public class DateDslTest {
 
 	@Test
 	public void containsCalendar() {
-		assertFalse(range().startWith(now()).endWith(tomorrow())
-				.contains(yesterday().toCalendar()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(yesterday().toCalendar()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(now().toCalendar()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(tomorrow().toCalendar()));
-		assertFalse(range().startWith(now()).endWith(tomorrow())
-				.contains(tomorrow().add(days(1)).toCalendar()));
+		assertFalse(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2013, 12, 31).toCalendar()));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 2).toCalendar()));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 2).toCalendar()));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 3).toCalendar()));
+		assertFalse(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 4).toCalendar()));
 	}
 
 	@Test
 	public void containsDate() {
-		assertFalse(range().startWith(now()).endWith(tomorrow())
-				.contains(yesterday().toDate()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(yesterday().toDate()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(now().toDate()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(tomorrow().toDate()));
-		assertFalse(range().startWith(now()).endWith(tomorrow())
-				.contains(tomorrow().add(days(1)).toDate()));
+		assertFalse(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2013, 12, 31).toDate()));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 2).toDate()));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 2).toDate()));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 3).toDate()));
+		assertFalse(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 4).toDate()));
 	}
 
 	@Test
 	public void containsDateBuilder() {
-
-		assertFalse(range().startWith(now()).endWith(tomorrow())
-				.contains(yesterday()));
-
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(yesterday()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(now()));
-		assertTrue(range().startWith(yesterday()).endWith(tomorrow())
-				.contains(tomorrow()));
-		assertFalse(range().startWith(now()).endWith(tomorrow())
-				.contains(tomorrow().add(days(1))));
+		assertFalse(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2013, 12, 31)));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 2)));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 2)));
+		assertTrue(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 3)));
+		assertFalse(range().startWith(date(2014, 1, 1))
+				.endWith(date(2014, 1, 3))
+				.contains(date(2014, 1, 4)));
 	}
 
 	@Test
