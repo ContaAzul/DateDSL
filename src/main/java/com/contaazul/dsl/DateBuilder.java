@@ -24,12 +24,12 @@ public final class DateBuilder {
 
 	public DateBuilder(Calendar calendar) {
 		this.date = Calendar.getInstance();
-		this.date.setTime(calendar.getTime());
+		this.date.setTime( calendar.getTime() );
 	}
 
 	public DateBuilder(Date date) {
 		this.date = Calendar.getInstance();
-		this.date.setTime(date);
+		this.date.setTime( date );
 	}
 
 	/**
@@ -46,7 +46,7 @@ public final class DateBuilder {
 			int i = 0;
 			while (i != nbDay) {
 
-				date.add(unit.type, 1);
+				date.add( unit.type, 1 );
 
 				if (!isWeekend()) {
 					i++;
@@ -54,7 +54,7 @@ public final class DateBuilder {
 			}
 
 		} else {
-			date.add(unit.type, unit.size);
+			date.add( unit.type, unit.size );
 		}
 		return this;
 	}
@@ -65,12 +65,20 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder clearTime() {
-		date.set(HOUR_OF_DAY, 0);
-		date.clear(MINUTE);
-		date.clear(SECOND);
-		date.clear(MILLISECOND);
+		date.set( HOUR_OF_DAY, 0 );
+		date.clear( MINUTE );
+		date.clear( SECOND );
+		date.clear( MILLISECOND );
 		return this;
 
+	}
+
+	public DateBuilder lastTime() {
+		date.set( Calendar.HOUR_OF_DAY, 23 );
+		date.set( Calendar.MINUTE, 59 );
+		date.set( Calendar.SECOND, 59 );
+		date.set( Calendar.MILLISECOND, 999 );
+		return this;
 	}
 
 	/**
@@ -79,7 +87,7 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder firstDayOfMonth() {
-		date.set(DAY_OF_MONTH, 1);
+		date.set( DAY_OF_MONTH, 1 );
 		return this;
 	}
 
@@ -89,67 +97,67 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder firstDayOfNextMonth() {
-		firstDayOfMonth().add(DateDsl.months(1));
+		firstDayOfMonth().add( DateDsl.months( 1 ) );
 		return this;
 	}
 
 	public String format(String dateFormat) {
-		return new SimpleDateFormat(dateFormat).format(this.date.getTime());
+		return new SimpleDateFormat( dateFormat ).format( this.date.getTime() );
 	}
 
 	public int getDayOfMonth() {
-		return date.get(Calendar.DAY_OF_MONTH);
+		return date.get( Calendar.DAY_OF_MONTH );
 	}
 
 	public int getDayOfWeek() {
-		return date.get(Calendar.DAY_OF_WEEK);
+		return date.get( Calendar.DAY_OF_WEEK );
 	}
 
 	public int getHour() {
-		return date.get(Calendar.HOUR);
+		return date.get( Calendar.HOUR );
 	}
 
 	public int getHourOfDay() {
-		return date.get(Calendar.HOUR_OF_DAY);
+		return date.get( Calendar.HOUR_OF_DAY );
 	}
 
 	/*
 	 * une liste de geter pour recuperer facilement des valeurs
 	 */
 	public int getMillisecond() {
-		return date.get(Calendar.MILLISECOND);
+		return date.get( Calendar.MILLISECOND );
 	}
 
 	public int getMinute() {
-		return date.get(Calendar.MINUTE);
+		return date.get( Calendar.MINUTE );
 	}
 
 	public int getMonth() {
-		return date.get(Calendar.MONTH);
+		return date.get( Calendar.MONTH );
 	}
 
 	public Months getMonths() {
-		return Months.values()[date.get(Calendar.MONTH)];
+		return Months.values()[date.get( Calendar.MONTH )];
 	}
 
 	public int getSecond() {
-		return date.get(Calendar.SECOND);
+		return date.get( Calendar.SECOND );
 	}
 
 	public WeekDays getWeekDay() {
-		return WeekDays.values()[date.get(Calendar.DAY_OF_WEEK)];
+		return WeekDays.values()[date.get( Calendar.DAY_OF_WEEK )];
 	}
 
 	public int getWeekMonth() {
-		return date.get(Calendar.WEEK_OF_MONTH);
+		return date.get( Calendar.WEEK_OF_MONTH );
 	}
 
 	public int getWeekYear() {
-		return date.get(Calendar.WEEK_OF_YEAR);
+		return date.get( Calendar.WEEK_OF_YEAR );
 	}
 
 	public int getYear() {
-		return date.get(Calendar.YEAR);
+		return date.get( Calendar.YEAR );
 	}
 
 	/**
@@ -183,10 +191,10 @@ public final class DateBuilder {
 	 * @return true if it is the same day
 	 */
 	public boolean isSameDayAs(Calendar calendar) {
-		return (date.get(Calendar.ERA) == calendar.get(Calendar.ERA)
-				&& date.get(Calendar.YEAR) == calendar.get(Calendar.YEAR) && date
-					.get(Calendar.DAY_OF_YEAR) == calendar
-				.get(Calendar.DAY_OF_YEAR));
+		return (date.get( Calendar.ERA ) == calendar.get( Calendar.ERA )
+				&& date.get( Calendar.YEAR ) == calendar.get( Calendar.YEAR ) && date
+					.get( Calendar.DAY_OF_YEAR ) == calendar
+				.get( Calendar.DAY_OF_YEAR ));
 	}
 
 	/**
@@ -199,8 +207,8 @@ public final class DateBuilder {
 	public boolean isSameDayAs(Date date) {
 
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		return isSameDayAs(calendar);
+		calendar.setTime( date );
+		return isSameDayAs( calendar );
 	}
 
 	/**
@@ -211,11 +219,11 @@ public final class DateBuilder {
 	 * @return true if they represent the same millisecond instant
 	 */
 	public boolean isSameTimeAs(Calendar calendar) {
-		return (date.get(Calendar.HOUR) == calendar.get(Calendar.HOUR)
-				&& date.get(Calendar.MINUTE) == calendar.get(Calendar.MINUTE)
-				&& date.get(Calendar.SECOND) == calendar.get(Calendar.SECOND) && date
-					.get(Calendar.MILLISECOND) == calendar
-				.get(Calendar.MILLISECOND));
+		return (date.get( Calendar.HOUR ) == calendar.get( Calendar.HOUR )
+				&& date.get( Calendar.MINUTE ) == calendar.get( Calendar.MINUTE )
+				&& date.get( Calendar.SECOND ) == calendar.get( Calendar.SECOND ) && date
+					.get( Calendar.MILLISECOND ) == calendar
+				.get( Calendar.MILLISECOND ));
 	}
 
 	/**
@@ -227,8 +235,8 @@ public final class DateBuilder {
 	 */
 	public boolean isSameTimeAs(Date dateToCompare) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(dateToCompare);
-		return isSameTimeAs(calendar);
+		calendar.setTime( dateToCompare );
+		return isSameTimeAs( calendar );
 
 	}
 
@@ -239,8 +247,8 @@ public final class DateBuilder {
 	 */
 	public boolean isWeekend() {
 
-		if ((date.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY)
-				|| (date.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)) {
+		if ((date.get( Calendar.DAY_OF_WEEK ) == Calendar.SATURDAY)
+				|| (date.get( Calendar.DAY_OF_WEEK ) == Calendar.SUNDAY)) {
 			return true;
 		} else {
 			return false;
@@ -253,7 +261,7 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder lastDayOfMonth() {
-		date.set(DAY_OF_MONTH, date.getActualMaximum(Calendar.DAY_OF_MONTH));
+		date.set( DAY_OF_MONTH, date.getActualMaximum( Calendar.DAY_OF_MONTH ) );
 		return this;
 	}
 
@@ -263,17 +271,17 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder lastDayOfNextMonth() {
-		add(DateDsl.months(1)).lastDayOfMonth();
+		add( DateDsl.months( 1 ) ).lastDayOfMonth();
 		return this;
 	}
 
 	public DateBuilder setAsEqual(Calendar calendar) {
-		calendar.setTime(date.getTime());
+		calendar.setTime( date.getTime() );
 		return this;
 	}
 
 	public DateBuilder setAsEqual(Date dateExt) {
-		dateExt.setTime(date.getTime().getTime());
+		dateExt.setTime( date.getTime().getTime() );
 		return this;
 	}
 
@@ -285,7 +293,7 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder subtract(TimeUnit unit) {
-		date.add(unit.type, -unit.size);
+		date.add( unit.type, -unit.size );
 		return this;
 	}
 
@@ -321,7 +329,7 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder withDayOfMonth(int day) {
-		date.set(DAY_OF_MONTH, day);
+		date.set( DAY_OF_MONTH, day );
 		return this;
 	}
 
@@ -332,12 +340,12 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder withDayOfWeek(int day) {
-		date.set(DAY_OF_WEEK, day);
+		date.set( DAY_OF_WEEK, day );
 		return this;
 	}
 
 	public DateBuilder withDayOfWeek(WeekDays day) {
-		date.set(DAY_OF_WEEK, day.calendaWeekday);
+		date.set( DAY_OF_WEEK, day.calendaWeekday );
 		return this;
 	}
 
@@ -348,12 +356,12 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder withHour(int hour) {
-		date.set(HOUR, hour);
+		date.set( HOUR, hour );
 		return this;
 	}
 
 	public DateBuilder withHourOfDay(int hour) {
-		date.set(HOUR_OF_DAY, hour);
+		date.set( HOUR_OF_DAY, hour );
 		return this;
 	}
 
@@ -364,7 +372,7 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder withMillisecond(int millisecond) {
-		date.set(MILLISECOND, millisecond);
+		date.set( MILLISECOND, millisecond );
 		return this;
 	}
 
@@ -375,7 +383,7 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder withMinute(int minute) {
-		date.set(MINUTE, minute);
+		date.set( MINUTE, minute );
 		return this;
 	}
 
@@ -386,12 +394,12 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder withMonth(int month) {
-		date.set(MONTH, month);
+		date.set( MONTH, month );
 		return this;
 	}
 
 	public DateBuilder withMonth(Months month) {
-		date.set(MONTH, month.calendaMonth);
+		date.set( MONTH, month.calendaMonth );
 		return this;
 	}
 
@@ -402,7 +410,7 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder withSecond(int second) {
-		date.set(SECOND, second);
+		date.set( SECOND, second );
 		return this;
 	}
 
@@ -413,45 +421,44 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder withYear(int year) {
-		date.set(YEAR, year);
+		date.set( YEAR, year );
 		return this;
 	}
 
 	public boolean isFuture() {
-		return date.after(Calendar.getInstance());
+		return date.after( Calendar.getInstance() );
 	}
 
 	public boolean isPast() {
-		return date.before(Calendar.getInstance());
+		return date.before( Calendar.getInstance() );
 	}
 
 	public boolean before(Calendar dt) {
-		return date.before(dt);
+		return date.before( dt );
 	}
 
 	public boolean before(DateBuilder dt) {
-		return before(dt.toCalendar());
+		return before( dt.toCalendar() );
 	}
 
 	public boolean before(Date dt) {
-		return before(DateDsl.date(dt));
+		return before( DateDsl.date( dt ) );
 	}
-	
+
 	public boolean after(Calendar dt) {
-		return date.after(dt);
+		return date.after( dt );
 	}
-	
+
 	public boolean after(DateBuilder dt) {
-		return after(dt.toCalendar());
+		return after( dt.toCalendar() );
 	}
-	
+
 	public boolean after(Date dt) {
-		return after(DateDsl.date(dt));
+		return after( DateDsl.date( dt ) );
 	}
 
 	public boolean isToday() {
-		return isSameDayAs(new Date());
+		return isSameDayAs( new Date() );
 	}
 
-	
 }
