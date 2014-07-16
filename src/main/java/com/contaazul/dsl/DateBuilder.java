@@ -73,7 +73,7 @@ public final class DateBuilder {
 
 	}
 
-	public DateBuilder lastTime() {
+	public DateBuilder endOfDay() {
 		date.set( Calendar.HOUR_OF_DAY, 23 );
 		date.set( Calendar.MINUTE, 59 );
 		date.set( Calendar.SECOND, 59 );

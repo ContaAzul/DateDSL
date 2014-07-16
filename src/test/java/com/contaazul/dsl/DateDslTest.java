@@ -288,10 +288,10 @@ public class DateDslTest {
 	}
 
 	@Test
-	public void testLastTime() {
+	public void testEndOfDay() {
 		Calendar calNow = Calendar.getInstance();
 
-		Date now = now().lastTime().toDate();
+		Date now = now().endOfDay().toDate();
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime( now );
