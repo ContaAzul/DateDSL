@@ -35,28 +35,31 @@ public final class DateBuilder {
 	/**
 	 * Ajout de TimeUnit a une date.
 	 * 
-	 * @param unit
+	 * @param timeUnit
 	 *            TimeUnit
 	 * @return DateBuilder
 	 */
-	public DateBuilder add(TimeUnit unit) {
-
-		if (unit.workingDay) {
-			int nbDay = unit.size;
-			int i = 0;
-			while (i != nbDay) {
-
-				date.add( unit.type, 1 );
-
-				if (!isWeekend()) {
-					i++;
-				}
-			}
-
-		} else {
-			date.add( unit.type, unit.size );
-		}
+	public DateBuilder add(TimeUnit timeUnit) {
+		if (timeUnit.workingDay)
+			moveWorkingDays( timeUnit );
+		else
+			date.add( timeUnit.type, timeUnit.size );
 		return this;
+	}
+
+	private void moveWorkingDays(TimeUnit timeUnit) {
+		int moves = timeUnit.size;
+		int moved = 0;
+		int nextMove = (moves > 0) ? 1 : -1;
+		while (moved != moves)
+			moved = moveWorkingDay( timeUnit, moved, nextMove );
+	}
+
+	private int moveWorkingDay(TimeUnit unit, int moved, int move) {
+		date.add( unit.type, move );
+		if (!isWeekend())
+			moved += move;
+		return moved;
 	}
 
 	/**
@@ -293,8 +296,7 @@ public final class DateBuilder {
 	 * @return DateBuilder
 	 */
 	public DateBuilder subtract(TimeUnit unit) {
-		date.add( unit.type, -unit.size );
-		return this;
+		return add( new TimeUnit( unit.type, -unit.size, unit.workingDay ) );
 	}
 
 	public Calendar toCalendar() {

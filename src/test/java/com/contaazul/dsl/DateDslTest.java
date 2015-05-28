@@ -15,6 +15,8 @@ import static com.contaazul.dsl.DateDsl.tomorrow;
 import static com.contaazul.dsl.DateDsl.workingDays;
 import static com.contaazul.dsl.DateDsl.years;
 import static com.contaazul.dsl.DateDsl.yesterday;
+import static java.util.Calendar.FEBRUARY;
+import static java.util.Calendar.MARCH;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
@@ -396,11 +398,23 @@ public class DateDslTest {
 				range().startWith( yesterday().clearTime() )
 						.endWith( tomorrow().clearTime() )
 						.getElapsedDays() );
+	}
 
+	@Test
+	public void testGetElapsedDaysWithTwoLeapYear() {
 		assertEquals(
-				1830,
-				range().startWith( yesterday().clearTime() )
-						.endWith( now().add( years( 5 ) ).add( hours( 50 ) ) )
+				1829,
+				range().startWith( date( 2015, FEBRUARY, 28 ).clearTime() )
+						.endWith( date( 2020, MARCH, 1, 12, 0, 0, 0 ) )
+						.getElapsedDays() );
+	}
+
+	@Test
+	public void testGetElapsedDaysWithOneLeapYear() {
+		assertEquals(
+				1828,
+				range().startWith( date( 2015, FEBRUARY, 27 ).clearTime() )
+						.endWith( date( 2020, FEBRUARY, 28, 16, 0, 0, 0 ) )
 						.getElapsedDays() );
 	}
 
@@ -622,7 +636,7 @@ public class DateDslTest {
 	}
 
 	@Test
-	public void testWorkingDays() {
+	public void testAddWorkingDays() {
 		DateBuilder dt = emptyDate();
 		assertEquals( 1, dt.getDayOfMonth() );
 		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
@@ -631,11 +645,19 @@ public class DateDslTest {
 		assertEquals( 12, dt.getDayOfMonth() );
 		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
 		assertEquals( Calendar.FEBRUARY, dt.getMonth() );
+	}
 
-		dt.subtract( days( 3 ) );
-		assertEquals( 9, dt.getDayOfMonth() );
-		assertEquals( Calendar.MONDAY, dt.getDayOfWeek() );
-		assertEquals( Calendar.FEBRUARY, dt.getMonth() );
+	@Test
+	public void testSubtractWorkingDays() {
+		DateBuilder dt = emptyDate();
+		assertEquals( 1, dt.getDayOfMonth() );
+		assertEquals( Calendar.JANUARY, dt.getMonth() );
+		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
+
+		dt.subtract( workingDays( 9 ) );
+		assertEquals( 19, dt.getDayOfMonth() );
+		assertEquals( Calendar.FRIDAY, dt.getDayOfWeek() );
+		assertEquals( Calendar.DECEMBER, dt.getMonth() );
 	}
 
 	@Test
