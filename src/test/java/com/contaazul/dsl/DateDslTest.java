@@ -405,20 +405,18 @@ public class DateDslTest {
 
 	@Test
 	public void testGetElapsedDaysWithTwoLeapYear() {
-		assertEquals(
-				1829,
-				range().startWith( date( 2015, FEBRUARY, 28 ).clearTime() )
-						.endWith( date( 2020, MARCH, 1, 12, 0, 0, 0 ) )
-						.getElapsedDays() );
+		DateBuilder start = date( 2015, FEBRUARY, 28 ).clearTime();
+		DateBuilder end = date( 2020, MARCH, 1, 12, 0, 0, 0 );
+		int elapsedDays = range().startWith( start ).endWith( end ).getElapsedDays();
+		assertEquals( 1829, elapsedDays );
 	}
 
 	@Test
 	public void testGetElapsedDaysWithOneLeapYear() {
-		assertEquals(
-				1828,
-				range().startWith( date( 2015, FEBRUARY, 27 ).clearTime() )
-						.endWith( date( 2020, FEBRUARY, 28, 16, 0, 0, 0 ) )
-						.getElapsedDays() );
+		DateBuilder start = date( 2015, FEBRUARY, 27 ).clearTime();
+		DateBuilder end = date( 2020, FEBRUARY, 28, 16, 0, 0, 0 );
+		int elapsedDays = range().startWith( start ).endWith( end ).getElapsedDays();
+		assertEquals( 1828, elapsedDays );
 	}
 
 	@Test
