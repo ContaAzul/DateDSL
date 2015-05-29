@@ -16,7 +16,7 @@ public class TimeUnit {
 	public TimeUnit(int type, int size, boolean workingDay) {
 		this.type = type;
 		this.size = size;
-		this.workingDay = true;
+		this.workingDay = workingDay;
 	}
 
 	public int getType() {
