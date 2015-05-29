@@ -48,18 +48,18 @@ public final class DateBuilder {
 	}
 
 	private void moveWorkingDays(TimeUnit timeUnit) {
-		int moves = timeUnit.size;
-		int moved = 0;
-		int nextMove = (moves > 0) ? 1 : -1;
-		while (moved != moves)
-			moved = moveWorkingDay( timeUnit, moved, nextMove );
+		int size = timeUnit.size;
+		int sizeMoved = 0;
+		int nextMove = (size > 0) ? 1 : -1;
+		while (sizeMoved != size)
+			sizeMoved = moveWorkingDay( timeUnit, sizeMoved, nextMove );
 	}
 
-	private int moveWorkingDay(TimeUnit unit, int moved, int move) {
+	private int moveWorkingDay(TimeUnit unit, int sizeMoved, int move) {
 		date.add( unit.type, move );
 		if (!isWeekend())
-			moved += move;
-		return moved;
+			sizeMoved += move;
+		return sizeMoved;
 	}
 
 	/**

@@ -15,8 +15,11 @@ import static com.contaazul.dsl.DateDsl.tomorrow;
 import static com.contaazul.dsl.DateDsl.workingDays;
 import static com.contaazul.dsl.DateDsl.years;
 import static com.contaazul.dsl.DateDsl.yesterday;
+import static java.util.Calendar.DECEMBER;
 import static java.util.Calendar.FEBRUARY;
+import static java.util.Calendar.FRIDAY;
 import static java.util.Calendar.MARCH;
+import static java.util.Calendar.THURSDAY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
@@ -638,26 +641,19 @@ public class DateDslTest {
 	@Test
 	public void testAddWorkingDays() {
 		DateBuilder dt = emptyDate();
-		assertEquals( 1, dt.getDayOfMonth() );
-		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
-
 		dt.add( workingDays( 30 ) );
 		assertEquals( 12, dt.getDayOfMonth() );
-		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
-		assertEquals( Calendar.FEBRUARY, dt.getMonth() );
+		assertEquals( THURSDAY, dt.getDayOfWeek() );
+		assertEquals( FEBRUARY, dt.getMonth() );
 	}
 
 	@Test
 	public void testSubtractWorkingDays() {
 		DateBuilder dt = emptyDate();
-		assertEquals( 1, dt.getDayOfMonth() );
-		assertEquals( Calendar.JANUARY, dt.getMonth() );
-		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
-
 		dt.subtract( workingDays( 9 ) );
 		assertEquals( 19, dt.getDayOfMonth() );
-		assertEquals( Calendar.FRIDAY, dt.getDayOfWeek() );
-		assertEquals( Calendar.DECEMBER, dt.getMonth() );
+		assertEquals( FRIDAY, dt.getDayOfWeek() );
+		assertEquals( DECEMBER, dt.getMonth() );
 	}
 
 	@Test
