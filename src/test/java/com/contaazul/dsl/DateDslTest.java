@@ -207,6 +207,7 @@ public class DateDslTest {
 				.withDayOfWeek( Calendar.WEDNESDAY ).toDate();
 
 		assertEquals( Calendar.WEDNESDAY, date( date2 ).getDayOfWeek() );
+		assertEquals( WeekDays.WEDNESDAY, date( date2 ).getWeekDay() );
 		assertEquals( Calendar.JANUARY, date( date2 ).getMonth() );
 	}
 
@@ -262,6 +263,7 @@ public class DateDslTest {
 
 		Date date4 = date( cal1 ).add( workingDays( 7 ) ).clearTime().toDate();
 		assertEquals( Calendar.WEDNESDAY, date( date4 ).getDayOfWeek() );
+		assertEquals( WeekDays.WEDNESDAY, date( date4 ).getWeekDay() );
 
 		Calendar cal5 = Calendar.getInstance();
 		cal5.setTime( cal1.getTime() );
@@ -269,7 +271,9 @@ public class DateDslTest {
 		Date lundi = date( cal5 ).add( days( 3 ) ).clearTime().toDate();
 		Date mercredi = date( cal5 ).add( workingDays( 3 ) ).clearTime().toDate();
 		assertEquals( Calendar.MONDAY, date( lundi ).getDayOfWeek() );
+		assertEquals( WeekDays.MONDAY, date( lundi ).getWeekDay() );
 		assertEquals( Calendar.WEDNESDAY, date( mercredi ).getDayOfWeek() );
+		assertEquals( WeekDays.WEDNESDAY, date( mercredi ).getWeekDay() );
 	}
 
 	@Test
@@ -334,15 +338,18 @@ public class DateDslTest {
 		DateBuilder dt = emptyDate();
 		assertEquals( 1, dt.getDayOfMonth() );
 		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.THURSDAY, dt.getWeekDay() );
 
 		dt.add( days( 31 ) );
 		assertEquals( 1, dt.getDayOfMonth() );
 		assertEquals( Calendar.SUNDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.SUNDAY, dt.getWeekDay() );
 		assertEquals( Calendar.FEBRUARY, dt.getMonth() );
 
 		dt.subtract( days( 1 ) );
 		assertEquals( 31, dt.getDayOfMonth() );
 		assertEquals( Calendar.SATURDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.SATURDAY, dt.getWeekDay() );
 		assertEquals( Calendar.JANUARY, dt.getMonth() );
 	}
 
@@ -642,6 +649,7 @@ public class DateDslTest {
 		dt.add( workingDays( 30 ) );
 		assertEquals( 12, dt.getDayOfMonth() );
 		assertEquals( THURSDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.THURSDAY, dt.getWeekDay() );
 		assertEquals( FEBRUARY, dt.getMonth() );
 	}
 
@@ -651,6 +659,7 @@ public class DateDslTest {
 		dt.subtract( workingDays( 9 ) );
 		assertEquals( 19, dt.getDayOfMonth() );
 		assertEquals( FRIDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.FRIDAY, dt.getWeekDay() );
 		assertEquals( DECEMBER, dt.getMonth() );
 	}
 

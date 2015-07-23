@@ -148,7 +148,7 @@ public final class DateBuilder {
 	}
 
 	public WeekDays getWeekDay() {
-		return WeekDays.values()[date.get( Calendar.DAY_OF_WEEK )];
+		return WeekDays.values()[date.get( Calendar.DAY_OF_WEEK ) - 1];
 	}
 
 	public int getWeekMonth() {
