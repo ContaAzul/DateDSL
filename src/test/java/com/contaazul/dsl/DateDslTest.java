@@ -15,11 +15,6 @@ import static com.contaazul.dsl.DateDsl.tomorrow;
 import static com.contaazul.dsl.DateDsl.workingDays;
 import static com.contaazul.dsl.DateDsl.years;
 import static com.contaazul.dsl.DateDsl.yesterday;
-import static java.util.Calendar.DECEMBER;
-import static java.util.Calendar.FEBRUARY;
-import static java.util.Calendar.FRIDAY;
-import static java.util.Calendar.MARCH;
-import static java.util.Calendar.THURSDAY;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
@@ -207,6 +202,7 @@ public class DateDslTest {
 				.withDayOfWeek( Calendar.WEDNESDAY ).toDate();
 
 		assertEquals( Calendar.WEDNESDAY, date( date2 ).getDayOfWeek() );
+		assertEquals( WeekDays.WEDNESDAY, date( date2 ).getWeekDay() );
 		assertEquals( Calendar.JANUARY, date( date2 ).getMonth() );
 	}
 
@@ -262,6 +258,7 @@ public class DateDslTest {
 
 		Date date4 = date( cal1 ).add( workingDays( 7 ) ).clearTime().toDate();
 		assertEquals( Calendar.WEDNESDAY, date( date4 ).getDayOfWeek() );
+		assertEquals( WeekDays.WEDNESDAY, date( date4 ).getWeekDay() );
 
 		Calendar cal5 = Calendar.getInstance();
 		cal5.setTime( cal1.getTime() );
@@ -269,7 +266,9 @@ public class DateDslTest {
 		Date lundi = date( cal5 ).add( days( 3 ) ).clearTime().toDate();
 		Date mercredi = date( cal5 ).add( workingDays( 3 ) ).clearTime().toDate();
 		assertEquals( Calendar.MONDAY, date( lundi ).getDayOfWeek() );
+		assertEquals( WeekDays.MONDAY, date( lundi ).getWeekDay() );
 		assertEquals( Calendar.WEDNESDAY, date( mercredi ).getDayOfWeek() );
+		assertEquals( WeekDays.WEDNESDAY, date( mercredi ).getWeekDay() );
 	}
 
 	@Test
@@ -334,15 +333,18 @@ public class DateDslTest {
 		DateBuilder dt = emptyDate();
 		assertEquals( 1, dt.getDayOfMonth() );
 		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.THURSDAY, dt.getWeekDay() );
 
 		dt.add( days( 31 ) );
 		assertEquals( 1, dt.getDayOfMonth() );
 		assertEquals( Calendar.SUNDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.SUNDAY, dt.getWeekDay() );
 		assertEquals( Calendar.FEBRUARY, dt.getMonth() );
 
 		dt.subtract( days( 1 ) );
 		assertEquals( 31, dt.getDayOfMonth() );
 		assertEquals( Calendar.SATURDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.SATURDAY, dt.getWeekDay() );
 		assertEquals( Calendar.JANUARY, dt.getMonth() );
 	}
 
@@ -405,16 +407,16 @@ public class DateDslTest {
 
 	@Test
 	public void testGetElapsedDaysWithTwoLeapYear() {
-		DateBuilder start = date( 2015, FEBRUARY, 28 ).clearTime();
-		DateBuilder end = date( 2020, MARCH, 1, 12, 0, 0, 0 );
+		DateBuilder start = date( 2015, Calendar.FEBRUARY, 28 ).clearTime();
+		DateBuilder end = date( 2020, Calendar.MARCH, 1, 12, 0, 0, 0 );
 		int elapsedDays = range().startWith( start ).endWith( end ).getElapsedDays();
 		assertEquals( 1829, elapsedDays );
 	}
 
 	@Test
 	public void testGetElapsedDaysWithOneLeapYear() {
-		DateBuilder start = date( 2015, FEBRUARY, 27 ).clearTime();
-		DateBuilder end = date( 2020, FEBRUARY, 28, 16, 0, 0, 0 );
+		DateBuilder start = date( 2015, Calendar.FEBRUARY, 27 ).clearTime();
+		DateBuilder end = date( 2020, Calendar.FEBRUARY, 28, 16, 0, 0, 0 );
 		int elapsedDays = range().startWith( start ).endWith( end ).getElapsedDays();
 		assertEquals( 1828, elapsedDays );
 	}
@@ -641,8 +643,9 @@ public class DateDslTest {
 		DateBuilder dt = emptyDate();
 		dt.add( workingDays( 30 ) );
 		assertEquals( 12, dt.getDayOfMonth() );
-		assertEquals( THURSDAY, dt.getDayOfWeek() );
-		assertEquals( FEBRUARY, dt.getMonth() );
+		assertEquals( Calendar.THURSDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.THURSDAY, dt.getWeekDay() );
+		assertEquals( Calendar.FEBRUARY, dt.getMonth() );
 	}
 
 	@Test
@@ -650,8 +653,9 @@ public class DateDslTest {
 		DateBuilder dt = emptyDate();
 		dt.subtract( workingDays( 9 ) );
 		assertEquals( 19, dt.getDayOfMonth() );
-		assertEquals( FRIDAY, dt.getDayOfWeek() );
-		assertEquals( DECEMBER, dt.getMonth() );
+		assertEquals( Calendar.FRIDAY, dt.getDayOfWeek() );
+		assertEquals( WeekDays.FRIDAY, dt.getWeekDay() );
+		assertEquals( Calendar.DECEMBER, dt.getMonth() );
 	}
 
 	@Test
