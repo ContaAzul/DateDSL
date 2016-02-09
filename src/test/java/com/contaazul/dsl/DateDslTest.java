@@ -116,6 +116,56 @@ public class DateDslTest {
 	}
 
 	@Test
+	public void firstDayOfQuarter() {
+		assertFirstDayOfQuarter( Calendar.JANUARY, Calendar.JANUARY );
+		assertFirstDayOfQuarter( Calendar.FEBRUARY, Calendar.JANUARY );
+		assertFirstDayOfQuarter( Calendar.MARCH, Calendar.JANUARY );
+		assertFirstDayOfQuarter( Calendar.APRIL, Calendar.APRIL );
+		assertFirstDayOfQuarter( Calendar.MAY, Calendar.APRIL );
+		assertFirstDayOfQuarter( Calendar.JUNE, Calendar.APRIL );
+		assertFirstDayOfQuarter( Calendar.JULY, Calendar.JULY );
+		assertFirstDayOfQuarter( Calendar.AUGUST, Calendar.JULY );
+		assertFirstDayOfQuarter( Calendar.SEPTEMBER, Calendar.JULY );
+		assertFirstDayOfQuarter( Calendar.OCTOBER, Calendar.OCTOBER );
+		assertFirstDayOfQuarter( Calendar.NOVEMBER, Calendar.OCTOBER );
+		assertFirstDayOfQuarter( Calendar.DECEMBER, Calendar.OCTOBER );
+	}
+
+	private void assertFirstDayOfQuarter(int currentMonth, int expectedMonth) {
+		Calendar cal = Calendar.getInstance();
+		cal.set( Calendar.MONTH, currentMonth );
+		DateBuilder firstDayOfQuarter = date( cal ).firstDayOfQuarter();
+
+		assertEquals( expectedMonth, firstDayOfQuarter.getMonth() );
+		assertEquals( 1, firstDayOfQuarter.getDayOfMonth() );
+	}
+
+	@Test
+	public void lastDayOfQuarter() {
+		assertLastDayOfQuarter( Calendar.JANUARY, 31, Calendar.MARCH );
+		assertLastDayOfQuarter( Calendar.FEBRUARY, 31, Calendar.MARCH );
+		assertLastDayOfQuarter( Calendar.MARCH, 31, Calendar.MARCH );
+		assertLastDayOfQuarter( Calendar.APRIL, 30, Calendar.JUNE );
+		assertLastDayOfQuarter( Calendar.MAY, 30, Calendar.JUNE );
+		assertLastDayOfQuarter( Calendar.JUNE, 30, Calendar.JUNE );
+		assertLastDayOfQuarter( Calendar.JULY, 30, Calendar.SEPTEMBER );
+		assertLastDayOfQuarter( Calendar.AUGUST, 30, Calendar.SEPTEMBER );
+		assertLastDayOfQuarter( Calendar.SEPTEMBER, 30, Calendar.SEPTEMBER );
+		assertLastDayOfQuarter( Calendar.OCTOBER, 31, Calendar.DECEMBER );
+		assertLastDayOfQuarter( Calendar.NOVEMBER, 31, Calendar.DECEMBER );
+		assertLastDayOfQuarter( Calendar.DECEMBER, 31, Calendar.DECEMBER );
+	}
+
+	private void assertLastDayOfQuarter(int currentMonth, int expectedDay, int expectedMonth) {
+		Calendar cal = Calendar.getInstance();
+		cal.set( Calendar.MONTH, currentMonth );
+		DateBuilder lastDayOfQuarter = date( cal ).lastDayOfQuarter();
+
+		assertEquals( expectedMonth, lastDayOfQuarter.getMonth() );
+		assertEquals( expectedDay, lastDayOfQuarter.getDayOfMonth() );
+	}
+
+	@Test
 	public void isSameAsCalendar() {
 		Calendar calendar = Calendar.getInstance();
 		assertFalse( now().setAsEqual( calendar ).add( milliSecondes( 2 ) )
