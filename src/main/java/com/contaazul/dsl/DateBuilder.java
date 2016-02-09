@@ -278,6 +278,24 @@ public final class DateBuilder {
 		return this;
 	}
 
+	public DateBuilder firstDayOfQuarter() {
+		date.set( Calendar.MONTH, getFirstMonthOfQuarter() );
+		return firstDayOfMonth();
+	}
+
+	private int getFirstMonthOfQuarter() {
+		return getQuarter() * 3;
+	}
+
+	private int getQuarter() {
+		return date.get( MONTH ) / 3;
+	}
+
+	public DateBuilder lastDayOfQuarter() {
+		date.set( Calendar.MONTH, getFirstMonthOfQuarter() + 2 );
+		return lastDayOfMonth();
+	}
+
 	public DateBuilder setAsEqual(Calendar calendar) {
 		calendar.setTime( date.getTime() );
 		return this;
